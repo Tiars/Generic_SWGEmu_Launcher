@@ -22,31 +22,42 @@ Partial Class Launchpad
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.StatusText = New System.Windows.Forms.TextBox()
+        Me.IndividualProgressBar = New System.Windows.Forms.ProgressBar()
+        Me.OverallProgressBar = New System.Windows.Forms.ProgressBar()
         Me.SuspendLayout()
         '
-        'TextBox1
+        'StatusText
         '
-        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox1.CausesValidation = False
-        Me.TextBox1.Enabled = False
-        Me.TextBox1.Location = New System.Drawing.Point(40, 27)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(5)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(497, 100)
-        Me.TextBox1.TabIndex = 0
+        Me.StatusText.BackColor = System.Drawing.SystemColors.WindowText
+        Me.StatusText.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.StatusText.CausesValidation = False
+        Me.StatusText.ForeColor = System.Drawing.SystemColors.Window
+        Me.StatusText.Location = New System.Drawing.Point(40, 262)
+        Me.StatusText.Margin = New System.Windows.Forms.Padding(5)
+        Me.StatusText.Multiline = True
+        Me.StatusText.Name = "StatusText"
+        Me.StatusText.ReadOnly = True
+        Me.StatusText.Size = New System.Drawing.Size(497, 44)
+        Me.StatusText.TabIndex = 0
         '
-        'ProgressBar1
+        'IndividualProgressBar
         '
-        Me.ProgressBar1.BackColor = System.Drawing.Color.White
-        Me.ProgressBar1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.ProgressBar1.Location = New System.Drawing.Point(40, 311)
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(497, 12)
-        Me.ProgressBar1.TabIndex = 1
+        Me.IndividualProgressBar.BackColor = System.Drawing.Color.White
+        Me.IndividualProgressBar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.IndividualProgressBar.Location = New System.Drawing.Point(40, 332)
+        Me.IndividualProgressBar.Name = "IndividualProgressBar"
+        Me.IndividualProgressBar.Size = New System.Drawing.Size(497, 12)
+        Me.IndividualProgressBar.TabIndex = 1
+        '
+        'OverallProgressBar
+        '
+        Me.OverallProgressBar.BackColor = System.Drawing.Color.White
+        Me.OverallProgressBar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.OverallProgressBar.Location = New System.Drawing.Point(40, 314)
+        Me.OverallProgressBar.Name = "OverallProgressBar"
+        Me.OverallProgressBar.Size = New System.Drawing.Size(497, 12)
+        Me.OverallProgressBar.TabIndex = 2
         '
         'Launchpad
         '
@@ -56,9 +67,10 @@ Partial Class Launchpad
         Me.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ClientSize = New System.Drawing.Size(618, 352)
-        Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.TextBox1)
+        Me.ClientSize = New System.Drawing.Size(909, 352)
+        Me.Controls.Add(Me.OverallProgressBar)
+        Me.Controls.Add(Me.IndividualProgressBar)
+        Me.Controls.Add(Me.StatusText)
         Me.ForeColor = System.Drawing.SystemColors.Window
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.Name = "Launchpad"
@@ -70,6 +82,7 @@ Partial Class Launchpad
 
     End Sub
 
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents StatusText As TextBox
+    Friend WithEvents IndividualProgressBar As ProgressBar
+    Friend WithEvents OverallProgressBar As ProgressBar
 End Class
