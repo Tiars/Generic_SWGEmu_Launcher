@@ -1,16 +1,4 @@
 ﻿Imports System
-Imports System.Net
-Imports System.Net.Sockets
-Imports System.IO
-Imports System.Collections
-Imports System.Security.Cryptography
-Imports System.Windows.Forms
-Imports System.Text
-Imports System.Xml
-Imports System.Xml.Serialization
-Imports System.Data
-Imports System.Threading
-Imports Generic_SWGEmu_Launcher
 
 Public Class Launchpad
 
@@ -23,6 +11,7 @@ Public Class Launchpad
         presentText(TextBox1, "Hello World", 100)
         blankLine(TextBox1, 100)
         extendText(TextBox1, "Good Progress", 100)
-
+        blankLine(TextBox1, 100)
+        extendText(TextBox1, getSWGLocation(), 100)
     End Sub
 End Class
