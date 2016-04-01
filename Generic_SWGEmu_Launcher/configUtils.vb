@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic
 Imports System
+Imports System.Text
 Imports System.Security
 Imports System.Security.Permissions
 Imports Microsoft.Win32
@@ -10,15 +11,19 @@ Module configUtils
 
         Try
             ' Get from the registry the location of where SWG was installed
+            ' No need to paramatarize this since it should not change
             Dim readValue = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\StarWarsGalaxies",
 "Path", Nothing)
 
+            ' Will not get here if exception is thrown
             ' Check to see if the entry is empty
-            If readValue Is Nothing Then
-                Return "Value does not exist."
-            End If
 
-            ' Return the non-null value
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return "ERROR - Value does not exist."
+            'End If
+
+            ' Return the value, Nothing or Error message
             Return readValue
 
         Catch e As SecurityException
