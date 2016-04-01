@@ -1,15 +1,5 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.Net
-Imports System.Net.Sockets
-Imports System.IO
-Imports System.Collections
-Imports System.Security.Cryptography
-Imports System.Windows.Forms
+﻿Imports System
 Imports System.Text
-Imports System.Xml
-Imports System.Xml.Serialization
-Imports System.Data
 Imports System.Threading
 
 Module textUtils
