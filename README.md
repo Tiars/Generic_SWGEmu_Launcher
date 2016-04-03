@@ -26,10 +26,14 @@ HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\Version
 	The version of the Launcher
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\URL
 	The URL to use to get Launcher files
+HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\HasTest
+	Yes/No answer to if the server has a seperate Test Server
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Version
 	The current version of the Game client files
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\URL
 	The URL to use to get Game files
+HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Patchnotes
+	The URL to use to get Game Patchnotes
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Status
 	The current Game status information URL
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Manifest
@@ -40,9 +44,20 @@ HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Version
 	The current version of the Test client files
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\URL
 	The URL to use to get Test files
+HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Patchnotes
+	The URL to use to get Test Patchnotes
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Status
 	The current Test status information URL
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Manifest
 	The current location of the Test install Manifest file
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Path
 	The current location of the Test executables
+
+Interesting Update:
+
+After wasting an entire day trying to cause the Patchnotes and server status
+windows to toggle between the live and test servers I discovered a problem with
+the Visual Studio WebBrowser widget. It uses the actual browser configuration for
+several things. If the browser is set like mine you can not update the URL
+easily. So I converted the status and Parch notes windows to use the RichTextBox
+widget.
