@@ -124,6 +124,168 @@ Module configUtils
 
     End Function 'getLauncherHasTest
 
+    Public Function getLauncherHasEULA() As Boolean
+
+        Try
+            ' Get from the registry the Version String
+            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "HasEULA", Nothing)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is Yes
+            Return readValue Like "[Yy][Ee][Ss]"
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return False
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return False
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return False
+        End Try
+
+    End Function 'getLauncherHasEULA
+
+    Public Function getLauncherEULA() As String
+
+        Try
+            ' Get from the registry the Version String
+            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "EULA", Nothing)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return readValue
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return Nothing
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return Nothing
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return Nothing
+        End Try
+
+    End Function 'getLauncherEULA
+
+    Public Function getLauncherHasCalc() As Boolean
+
+        Try
+            ' Get from the registry the Version String
+            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "HasCalc", Nothing)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is Yes
+            Return readValue Like "[Yy][Ee][Ss]"
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return False
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return False
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return False
+        End Try
+
+    End Function 'getLauncherHasCalc
+
+    Public Function getLauncherCalc() As String
+
+        Try
+            ' Get from the registry the Version String
+            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "Calc", Nothing)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return readValue
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return Nothing
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return Nothing
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return Nothing
+        End Try
+
+    End Function 'getLauncherCalc
+
+    Public Function getLauncherHasForum() As Boolean
+
+        Try
+            ' Get from the registry the Version String
+            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "HasForum", Nothing)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is Yes
+            Return readValue Like "[Yy][Ee][Ss]"
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return False
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return False
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return False
+        End Try
+
+    End Function 'getLauncherHasForum
+
+    Public Function getLauncherForum() As String
+
+        Try
+            ' Get from the registry the Version String
+            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "Forum", Nothing)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return readValue
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return Nothing
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return Nothing
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return Nothing
+        End Try
+
+    End Function 'getLauncherForum
+
     Public Function getGameVersion() As String
 
         Try

@@ -13,35 +13,52 @@ Public Class Launchpad
 
     Dim serverNumber As Integer = 0 ' Initialize to Live Server
 
-
     Private Sub getGamenotesText()
         Dim request As WebRequest = WebRequest.Create(getGamePatchNotes())
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
-                Dim html As String = reader.ReadToEnd()
-                PatchNotesBox.Rtf = html
+                PatchNotesBox.Rtf = reader.ReadToEnd()
             End Using
         End Using
     End Sub 'getGamenotesText
+
+    Private Sub getGameStatusText()
+        Dim request As WebRequest = WebRequest.Create(getGameStatus())
+        Using response As WebResponse = request.GetResponse()
+            Using reader As New StreamReader(response.GetResponseStream())
+                StatusTextBox.Rtf = reader.ReadToEnd()
+            End Using
+        End Using
+    End Sub 'getGameStatusText
 
     Private Sub getTestnotesText()
         Dim request As WebRequest = WebRequest.Create(getTestPatchNotes())
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
-                Dim html As String = reader.ReadToEnd()
-                PatchNotesBox.Rtf = html
+                PatchNotesBox.Rtf = reader.ReadToEnd()
             End Using
         End Using
     End Sub 'getTestnotesText
+
+    Private Sub getTestStatusText()
+        Dim request As WebRequest = WebRequest.Create(getTestStatus())
+        Using response As WebResponse = request.GetResponse()
+            Using reader As New StreamReader(response.GetResponseStream())
+                StatusTextBox.Rtf = reader.ReadToEnd()
+            End Using
+        End Using
+    End Sub 'getTestStatusText
 
     Private Sub setGameTestInfo(ByRef flag As Integer)
         Dim localURI As Uri = Nothing
 
         If flag = 0 Then
             getGamenotesText()
+            getGameStatusText()
             ServerButton.Text = "Switch to Testserver"
         Else
             getTestnotesText()
+            getTestStatusText()
             ServerButton.Text = "Switch to Main Server"
         End If
 
@@ -58,12 +75,10 @@ Public Class Launchpad
 
     Private Sub SWGEmu_Launcher_Running(sender As Object, e As EventArgs) Handles MyBase.Shown
 
-        WebBrowserStatus.Navigate(New Uri(getGameStatus()), False)
-        WebBrowserTest.Navigate(New Uri(getTestStatus()), False)
-
+        ' Refresh Patch notes
+        PatchNotesBox.Refresh()
         ' Refresh Server Status
-        WebBrowserStatus.Refresh()
-        WebBrowserTest.Refresh()
+        StatusTextBox.Refresh()
 
     End Sub
 
@@ -85,9 +100,10 @@ Public Class Launchpad
         ' Update view
         setGameTestInfo(serverNumber)
 
+        ' Refresh Patch notes
+        PatchNotesBox.Refresh()
         ' Refresh Server Status
-        WebBrowserStatus.Refresh()
-        WebBrowserTest.Refresh()
+        StatusTextBox.Refresh()
 
         Me.Refresh()
 
