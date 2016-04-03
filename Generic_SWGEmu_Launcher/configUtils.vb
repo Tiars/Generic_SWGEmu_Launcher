@@ -7,7 +7,7 @@ Imports Microsoft.Win32
 
 Module configUtils
 
-    Const SWGServer As String = "SWG Tiars"
+    Public Const SWGServer As String = "SWG Tiars"
 
     Public Function getSWGLocation() As String
 
