@@ -70,6 +70,36 @@ Module configUtils
 
     End Function 'getLauncherVersion
 
+    Public Sub setLauncherVersion(ByVal setValue As String)
+
+        Try
+            ' Get from the registry the Version String
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "Version", setValue)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return
+        End Try
+
+    End Sub 'setLauncherVersion
+
     Public Function getLauncherURL() As String
 
         Try
@@ -316,6 +346,36 @@ Module configUtils
 
     End Function 'getGameVersion
 
+    Public Sub setGameVersion(ByVal setValue As String)
+
+        Try
+            ' Get from the registry the Version String
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Game", "Version", setValue)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return
+        End Try
+
+    End Sub 'setGameVersion
+
     Public Function getGameURL() As String
 
         Try
@@ -495,6 +555,36 @@ Module configUtils
         End Try
 
     End Function 'getTestVersion
+
+    Public Sub getTestVersion(ByVal setValue As String)
+
+        Try
+            ' Get from the registry the Version String
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Test", "Version", setValue)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return
+        End Try
+
+    End Sub 'setTestVersion
 
     Public Function getTestURL() As String
 

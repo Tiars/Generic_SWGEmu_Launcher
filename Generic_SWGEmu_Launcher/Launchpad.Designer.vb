@@ -22,6 +22,7 @@ Partial Class Launchpad
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Launchpad))
         Me.StatusText = New System.Windows.Forms.TextBox()
         Me.IndividualProgressBar = New System.Windows.Forms.ProgressBar()
         Me.OverallProgressBar = New System.Windows.Forms.ProgressBar()
@@ -189,12 +190,12 @@ Partial Class Launchpad
         Me.Controls.Add(Me.MenuStrip1)
         Me.ForeColor = System.Drawing.SystemColors.Window
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Launchpad"
         Me.Padding = New System.Windows.Forms.Padding(5)
-        Me.ShowIcon = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Text = "Form1"
         Me.MenuStrip1.ResumeLayout(False)
