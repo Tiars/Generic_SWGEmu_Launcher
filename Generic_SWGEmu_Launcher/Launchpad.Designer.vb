@@ -36,6 +36,7 @@ Partial Class Launchpad
         Me.InstallToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SwitchToTestserverToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GameConfigurationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -171,6 +172,21 @@ Partial Class Launchpad
         Me.GameConfigurationToolStripMenuItem.Size = New System.Drawing.Size(169, 24)
         Me.GameConfigurationToolStripMenuItem.Text = "Game Configuration"
         '
+        'Button1
+        '
+        Me.Button1.AutoEllipsis = True
+        Me.Button1.BackColor = System.Drawing.Color.White
+        Me.Button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.Button1.Location = New System.Drawing.Point(689, 305)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(100, 40)
+        Me.Button1.TabIndex = 11
+        Me.Button1.Text = "Test Download"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
         'Launchpad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -181,6 +197,7 @@ Partial Class Launchpad
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(908, 352)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.startGameButton)
         Me.Controls.Add(Me.StatusTextBox)
         Me.Controls.Add(Me.PatchNotesBox)
@@ -218,4 +235,5 @@ Partial Class Launchpad
     Friend WithEvents SwitchToTestserverToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GameConfigurationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InstallToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Button1 As Button
 End Class

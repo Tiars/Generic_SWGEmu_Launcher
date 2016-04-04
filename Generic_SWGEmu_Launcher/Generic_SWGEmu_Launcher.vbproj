@@ -122,6 +122,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="textUtils.vb" />
+    <Compile Include="WebFileDownloader.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Launchpad.resx">

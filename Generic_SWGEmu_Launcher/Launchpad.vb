@@ -34,9 +34,13 @@ Public Class Launchpad
     Dim testServerVersion As String = Nothing
     Dim testUpToDate As Boolean = False
 
+    'DECLARE THIS WITHEVENTS SO WE GET EVENTS ABOUT DOWNLOAD PROGRESS
+    Private WithEvents _Downloader As WebFileDownloader
+
     'Internal error number documentation
     ' 1001 Invalid value of serverNumber found when trying to launch game client
     ' 1002 Invalid value of serverNumber found when trying to launch game configuration tool
+
 
 
     Private Sub getGamenotesText()
@@ -316,5 +320,72 @@ Public Class Launchpad
         End Try
 
     End Sub ' GameConfigurationToolStripMenuItem_Click
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        'VERIFY A DIRECTORY WAS PICKED AND THAT IT EXISTS
+        If Not IO.Directory.Exists("c:\mtmp") Then
+            MessageBox.Show("Not a valid directory to download to, please pick a valid directory", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        'Initialize the overall progress bar
+        OverallProgressBar.Value = 0
+        OverallProgressBar.Maximum = 3
+
+        'DO THE DOWNLOAD
+        Try
+            _Downloader = New WebFileDownloader
+            _Downloader.DownloadFileWithProgress("http://10.0.0.8/Game/patch_10.tre", "c:\mtmp\patch_10.tre")
+            OverallProgressBar.Value = OverallProgressBar.Value + 1
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
+
+        Try
+            _Downloader = New WebFileDownloader
+            _Downloader.DownloadFileWithProgress("http://10.0.0.8/Game/patch_11_00.tre", "c:\mtmp\patch_11_00.tre")
+            OverallProgressBar.Value = OverallProgressBar.Value + 1
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
+
+        Try
+            _Downloader = New WebFileDownloader
+            _Downloader.DownloadFileWithProgress("http://10.0.0.8/Game/patch_12_00.tre", "c:\mtmp\patch_12_00.tre")
+            OverallProgressBar.Value = OverallProgressBar.Value + 1
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
+
+        OverallProgressBar.Value = OverallProgressBar.Maximum
+    End Sub
+
+    'Start Routines to support WebFileDownloader.vb module
+
+    'FIRES WHEN WE HAVE GOTTEN THE DOWNLOAD SIZE, SO WE KNOW WHAT BOUNDS TO GIVE THE PROGRESS BAR
+    Private Sub _Downloader_FileDownloadSizeObtained(ByVal iFileSize As Long) Handles _Downloader.FileDownloadSizeObtained
+        IndividualProgressBar.Value = 0
+        IndividualProgressBar.Maximum = Convert.ToInt32(iFileSize)
+    End Sub
+
+    'FIRES WHEN DOWNLOAD IS COMPLETE
+    Private Sub _Downloader_FileDownloadComplete() Handles _Downloader.FileDownloadComplete
+        IndividualProgressBar.Value = IndividualProgressBar.Maximum
+    End Sub
+
+    'FIRES WHEN DOWNLOAD FAILES. PASSES IN EXCEPTION INFO
+    Private Sub _Downloader_FileDownloadFailed(ByVal ex As System.Exception) Handles _Downloader.FileDownloadFailed
+        MessageBox.Show("An error has occured during download: " & ex.Message)
+    End Sub
+
+    'FIRES WHEN MORE OF THE FILE HAS BEEN DOWNLOADED
+    Private Sub _Downloader_AmountDownloadedChanged(ByVal iNewProgress As Long) Handles _Downloader.AmountDownloadedChanged
+        IndividualProgressBar.Value = Convert.ToInt32(iNewProgress)
+        ' StatusText.Text = WebFileDownloader.FormatFileSize(iNewProgress) & " of " & WebFileDownloader.FormatFileSize(IndividualProgressBar.Maximum) & " downloaded"
+        Application.DoEvents()
+    End Sub
+
+    'End Routines to support WebFileDownloader.vb module
 
 End Class
