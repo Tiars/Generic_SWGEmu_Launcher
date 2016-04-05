@@ -42,7 +42,6 @@ Public Class Launchpad
 
     ' Allocate the shared Manifest memory
     Dim manifest_file As String = ""
-    Dim driverLines As Object
     Dim num_rows As Long = 0
     Dim one_line As Object
     Dim num_cols As Long = 0
@@ -72,11 +71,11 @@ Public Class Launchpad
         localLines = Split(manifest_file, vbCrLf)
         ' determine the number of files
         ' num_rows becoming non-zero indicates that the manifest has been downloaded and placed into memory
-        rows = UBound(driverLines)
+        rows = UBound(localLines)
         ' break the first line into fields 
-        oneLine = Split(driverLines(0), ",")
+        oneLine = Split(localLines(0), ",")
         ' determine the number of fields
-        cols = UBound(one_line)
+        cols = UBound(oneLine)
 
     End Sub
 
@@ -511,6 +510,10 @@ Public Class Launchpad
                 Return
         End Select
 
+        'For Debug purposes display Manifest information
+        MsgBox("Minifest file contains" & vbCrLf &
+               Format(num_rows + 1, "G") & " Lines of " &
+               Format(num_cols + 1, "G") & " Elements")
     End Sub
 
     'End Routines to support WebFileDownloader.vb module

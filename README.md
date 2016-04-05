@@ -105,6 +105,153 @@ not cached locally. Since this code, unlike the Choice server code, checks the
 version instead of blindly rechecking the checksum there is no performance to be
 gained by keeping a local copy.
 
+# Manifest format and Flags
+
+The manifest is a CSV file with four fields.
+
+Field 1 = Relative path to file or directory
+          Registry entry
+Field 2 = Location Flag
+Field 3 = Action Flag
+Field 4 = Action 0 - 1, 6 - Comment
+          Action 2 - 4    - MD5 Checksum
+          Action 5        - String Value for registry entry
+
+In the Choice Launcher one flag was used. This produced a complex system that
+was not easy to understand since it combined where and what information.
+For the generic version I use two flags, one for what to do and one for where.
+
+First Flag - Location
+
+0  = Launcher install directory
+     These files are downloaded from getLauncherURL() to the directory that
+     the launcher is running in. When the Launcher version changes this manifest
+     location is processed before kicking off the launcher updater helper.
+1  = Play server install directory 
+     These files are downloaded from getGameURL() to getGamePath()
+2  = Test server install directory 
+     These files are downloaded from getTestURL() to getTestPath()
+3+ = Set aside for adding support for other Test Server locations
+
+Second Flag - Action
+
+0  = Delete file or directory if it exists
+     This flag is allocated to allow for cleaning up a directory. For example
+     it was decided to merge two .tre files and this was used to remove the now
+     unneeded file.
+
+1  = Directories to create
+     These are directories to create to speed up the initial launch of the game.
+
+2  = Verify Legal Copy
+     All files with this flag must exist in the SOE install directory and match
+     the provided checksum for the launcher to consider a legal copy to have been
+     installed.
+
+     At install time the files are copied from the SOE directory to getGamePath().
+     At verify time if the file in getGamePath() does not match the checksum the 
+     file is copied from the SOE directory if the SOE install directory has not 
+     been removed. An additional test will be done at verify time with files
+     copied from the install directory. They will be tested to see if they are
+     undamaged and match the checksum. If the SOE install directory has been 
+     removed to save disk space or does not match the checksum it is then 
+     downloaded from the game server.
+
+     One additional note. The various retail distributions included more and more
+     of the .tre files to speed up the install by downloading fewer files from
+     the server. The original distribution disks included the following .tre files
+     which are checked to verify a legal distribution:
+
+     bottom.tre
+     data_animation_00.tre
+     data_music_00.tre
+     data_other_00.tre
+     data_sample_00.tre
+     data_sample_01.tre
+     data_sample_02.tre
+     data_sample_03.tre
+     data_sample_04.tre
+     data_skeletal_mesh_00.tre
+     data_skeletal_mesh_01.tre
+     data_static_mesh_00.tre
+     data_static_mesh_01.tre
+     data_texture_00.tre
+     data_texture_01.tre
+     data_texture_02.tre
+     data_texture_03.tre
+     data_texture_04.tre
+     data_texture_05.tre
+     data_texture_06.tre
+     data_texture_07.tre
+     default_patch.tre
+     patch_00.tre
+     patch_01.tre
+
+     If you want you can also add the following client executables to
+     this catagory, but most were updated for versions of the client
+     that were shipped between the initial disk and Publish 14.1. If
+     you add them to this catagory they probably need to be in 
+     catagory 2 also so that you make sure that the correct version for
+     the client is downloaded with the client.
+
+     The Launcher location has no need to use this action.
+
+3  = SOE static files
+     This catagory is all of the client executables, dlls, config files
+     and executables associated with Publish 14.1.\
+
+     SOE layered .tre files so that each new publish that had additional
+     items in the .tre files added new .tre files. It is recommended that
+     SWGEmu custom servers continue to use this philosophy.
+
+     Files in this catagory will be checked to see if they exist in the
+     SOE install directory. If they do and match the checksum they will
+     be copied instead of downloaded to speed things up for people with
+     later versions of the install disks or still have their fully installed
+     directory from when they played the live game.
+
+     The Launcher location has no need to use this action.
+
+4  = Server extension files
+     For servers that are adding items to their server this is the catagory
+     for lumping the additional .tre files.
+
+     It would also be used for the server specific swgemu.cfg, swgemu_live.cfg,
+     swgemu_login.cfg, swgemu_preload.cfg and user.cfg files. These will
+     exist in a legacy SOE install directory from when the game was still running
+     but will also not neccisarily match your SWGEmu server. They may even be
+     different between the play and test versions of the server. All of these 
+     are reasons to place them into this catagory.
+
+     The Launcher location would use this for supplemental files, like a 
+     profession calculator stored in the launcher directory.
+
+5  = Add new registry entry
+     Location has no real meaning with this action. Location 0 is recommended.
+
+6  = Delete registry entry
+     Location has no real meaning with this action. Location 0 is recommended.
+
+7+ = Set aside for 
+
+# TestServer directory
+
+To save disk space it is best to set up the swgemu_live.cfg in the Test Server
+path to point to the Game client directory for the publish 14.1 and other .tre
+files that you are not changing. If you make the Test Server directory a
+sub directory of the game client directory, as SOE did, the unchanging .tre
+files can be referenced by prepending "../" to each entry in the file.
+
+If you decide to operate multiple test clients that are working on different
+things and needing different versions of files, you can have multiple sub directories
+in the game server directory.
+
+When talking about install and verifying the game files I will expect that this 
+is how the directories are structured. This system also means that for every file
+listed in the swgemu_live.cfg file as being taken from the game client directory
+it can be ommited from the test client manifest. This will make the install and
+verify for the test client go faster in addition to saving disk space.
+
 # Design Clarification
 
 At start the version of the launcher will be checked to see if it needs updating.
