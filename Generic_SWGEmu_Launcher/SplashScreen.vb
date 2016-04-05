@@ -8,7 +8,7 @@
         'Set up the dialog text at runtime according to the application's assembly information.  
 
         'Set Copyright info
-        Copyright.Text = My.Application.Info.Copyright
+        Version.Text = "Version: " & getLauncherVersion()
     End Sub
 
 End Class

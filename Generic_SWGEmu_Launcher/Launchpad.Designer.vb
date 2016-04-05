@@ -37,6 +37,9 @@ Partial Class Launchpad
         Me.SwitchToTestserverToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GameConfigurationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.ShutdownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -117,7 +120,7 @@ Partial Class Launchpad
         Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
         Me.MenuStrip1.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ForumToolStripMenuItem, Me.EULAToolStripMenuItem, Me.ProfessionCalculatorToolStripMenuItem, Me.InstallToolStripMenuItem, Me.SwitchToTestserverToolStripMenuItem, Me.GameConfigurationToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ForumToolStripMenuItem, Me.EULAToolStripMenuItem, Me.ProfessionCalculatorToolStripMenuItem, Me.InstallToolStripMenuItem, Me.ShutdownToolStripMenuItem, Me.SwitchToTestserverToolStripMenuItem, Me.GameConfigurationToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(5, 5)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(0)
@@ -187,6 +190,29 @@ Partial Class Launchpad
         Me.Button1.Text = "Test Download"
         Me.Button1.UseVisualStyleBackColor = False
         '
+        'ShutdownToolStripMenuItem
+        '
+        Me.ShutdownToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ShutdownToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
+        Me.ShutdownToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ShutdownToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShutdownLauncherAfterStartingGameToolStripMenuItem, Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem})
+        Me.ShutdownToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
+        Me.ShutdownToolStripMenuItem.Name = "ShutdownToolStripMenuItem"
+        Me.ShutdownToolStripMenuItem.Size = New System.Drawing.Size(135, 24)
+        Me.ShutdownToolStripMenuItem.Text = "Launcher Setup"
+        '
+        'ShutdownLauncherAfterStartingGameToolStripMenuItem
+        '
+        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Name = "ShutdownLauncherAfterStartingGameToolStripMenuItem"
+        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
+        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Text = "Shutdown Launcher  after starting game"
+        '
+        'KeepLauncherRunningAfterStartingGameToolStripMenuItem
+        '
+        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Name = "KeepLauncherRunningAfterStartingGameToolStripMenuItem"
+        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
+        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Text = "Keep Launcher running after starting game"
+        '
         'Launchpad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -236,4 +262,7 @@ Partial Class Launchpad
     Friend WithEvents GameConfigurationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InstallToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Button1 As Button
+    Friend WithEvents ShutdownToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ShutdownLauncherAfterStartingGameToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents KeepLauncherRunningAfterStartingGameToolStripMenuItem As ToolStripMenuItem
 End Class
