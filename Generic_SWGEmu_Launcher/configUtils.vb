@@ -408,31 +408,13 @@ Module configUtils
 
     Public Function getGameManifest() As String
 
-        Try
-            ' Get from the registry the local copy of the Manifest file
-            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Game", "Manifest", Nothing)
+        Dim readValue = getGameURL() & "Manifest"
 
-            ' Will not get here if exception is thrown
-
-            ' Check to see if the entry is empty
-            ' Debug code
-            'If readValue Is Nothing Then
-            '    Return Nothing
-            'End If
-
-            ' Return the value, Nothing or Error message
+        If readValue = "Manifest" Then
+            Return Nothing
+        Else
             Return readValue
-
-        Catch e As SecurityException
-            ' Handle the user does not have permissions to read from registry keys
-            Return Nothing
-        Catch e As ArgumentNullException
-            ' Handle the name of the key is Nothing
-            Return Nothing
-        Catch e As ArgumentException
-            ' Handle the key name exceeds the 255-character limit 
-            Return Nothing
-        End Try
+        End If
 
     End Function 'getGameManifest
 
@@ -556,7 +538,7 @@ Module configUtils
 
     End Function 'getTestVersion
 
-    Public Sub getTestVersion(ByVal setValue As String)
+    Public Sub setTestVersion(ByVal setValue As String)
 
         Try
             ' Get from the registry the Version String
@@ -618,31 +600,15 @@ Module configUtils
 
     Public Function getTestManifest() As String
 
-        Try
-            ' Get from the registry the local copy of the Manifest file
-            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Test", "Manifest", Nothing)
 
-            ' Will not get here if exception is thrown
+        Dim readValue = getTestURL() & "Manifest"
 
-            ' Check to see if the entry is empty
-            ' Debug code
-            'If readValue Is Nothing Then
-            '    Return Nothing
-            'End If
-
-            ' Return the value, Nothing or Error message
+        If readValue = "Manifest" Then
+            Return Nothing
+        Else
             Return readValue
+        End If
 
-        Catch e As SecurityException
-            ' Handle the user does not have permissions to read from registry keys
-            Return Nothing
-        Catch e As ArgumentNullException
-            ' Handle the name of the key is Nothing
-            Return Nothing
-        Catch e As ArgumentException
-            ' Handle the key name exceeds the 255-character limit 
-            Return Nothing
-        End Try
 
     End Function 'getTestManifest
 

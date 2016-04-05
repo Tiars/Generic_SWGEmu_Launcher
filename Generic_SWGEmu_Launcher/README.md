@@ -36,8 +36,6 @@ HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Patchnotes
 	The URL to use to get Game Patchnotes
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Status
 	The current Game status information URL
-HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Manifest
-	The current location of the Game install Manifest file
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Game\Path
 	The current location of the Game executables
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Version
@@ -48,8 +46,6 @@ HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Patchnotes
 	The URL to use to get Test Patchnotes
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Status
 	The current Test status information URL
-HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Manifest
-	The current location of the Test install Manifest file
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Test\Path
 	The current location of the Test executables
 
@@ -100,3 +96,38 @@ HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\HasEULA
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\EULA
 	The URL to the EULA. Since URLs can point to a local file there is no need
 	for this to reside on a web server.
+
+Update
+
+Removed the registry entry for the local copy of the manifest file since if it
+is used it will be copied into memory. Now it is copied directly into memory and
+not cached locally. Since this code, unlike the Choice server code, checks the
+version instead of blindly rechecking the checksum there is no performance to be
+gained by keeping a local copy.
+
+# Design Clarification
+
+At start the version of the launcher will be checked to see if it needs updating.
+If the launcher needs updating it will download and update the launcher.
+
+If the game client has not been installed there will be no check of the local
+version against the server version. The install verify button will be labeled
+Install.
+
+If the game client has been installed the local and server versions will be
+compared and if the server version is newer than the local copy the manifest will
+be downloaded and the client updated.
+
+Since not everyone will want the test server client installing is a three step process.
+
+First the play client must be installed.
+Second the launcher must be set to test server using the tool bar button.
+Third the Install of the test client will need to be done.
+
+The robust test for a legal copy of SWG is done as part of the play client install so 
+it is reasonable to use a successful install of the play client as a quick test for a
+legal copy when installing the test client.
+
+Since the static .tre files up through Publish 14.1 only need one copy, the test Server
+will save space by pointing to those .tre files in the play directory. So the test client
+directory will be smaller as will an efficient manifest.

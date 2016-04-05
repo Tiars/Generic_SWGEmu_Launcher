@@ -214,7 +214,7 @@ Partial Class Launchpad
         Me.Name = "Launchpad"
         Me.Padding = New System.Windows.Forms.Padding(5)
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.Text = "Form1"
+        Me.Text = "SWGEmu Launcher"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)

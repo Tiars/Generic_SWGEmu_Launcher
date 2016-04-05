@@ -34,14 +34,51 @@ Public Class Launchpad
     Dim testServerVersion As String = Nothing
     Dim testUpToDate As Boolean = False
 
+    'Save the results of the game installed test
+    Dim gameInstalled As Boolean = False
+
+    'Save the results of the game installed test
+    Dim testInstalled As Boolean = False
+
+    ' Allocate the shared Manifest memory
+    Dim manifest_file As String = ""
+    Dim driverLines As Object
+    Dim num_rows As Long = 0
+    Dim one_line As Object
+    Dim num_cols As Long = 0
+
     'DECLARE THIS WITHEVENTS SO WE GET EVENTS ABOUT DOWNLOAD PROGRESS
     Private WithEvents _Downloader As WebFileDownloader
 
     'Internal error number documentation
     ' 1001 Invalid value of serverNumber found when trying to launch game client
     ' 1002 Invalid value of serverNumber found when trying to launch game configuration tool
+    ' 1003 Invalid value of serverNumber found when trying to install or verify the play or test clients
+
+    Private Sub getManifest(ByRef array As String, ByRef rows As Long, ByRef cols As Long, ByVal URL As String)
+        Dim localLines As Object
+        Dim oneLine As Object
+
+        ' Load the Live manifest file into memory
+        Dim request As WebRequest = WebRequest.Create(URL)
+        Using response As WebResponse = request.GetResponse()
+            Using reader As New StreamReader(response.GetResponseStream())
+                manifest_file = reader.ReadToEnd()
+            End Using
+        End Using
 
 
+        ' split it into individual lines
+        localLines = Split(manifest_file, vbCrLf)
+        ' determine the number of files
+        ' num_rows becoming non-zero indicates that the manifest has been downloaded and placed into memory
+        rows = UBound(driverLines)
+        ' break the first line into fields 
+        oneLine = Split(driverLines(0), ",")
+        ' determine the number of fields
+        cols = UBound(one_line)
+
+    End Sub
 
     Private Sub getGamenotesText()
         Dim request As WebRequest = WebRequest.Create(getGamePatchNotes())
@@ -107,7 +144,7 @@ Public Class Launchpad
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
                 serverVersion = reader.ReadToEnd()
-                If lVersion = serverVersion Then Return True
+                If lVersion >= serverVersion Then Return True
             End Using
         End Using
 
@@ -116,8 +153,8 @@ Public Class Launchpad
 
     Private Sub SWGEmu_Launcher_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        ' Set the window name
-        Me.Text = "Launcher " & getLauncherVersion()
+        ' For test purposes set the working directory
+        Directory.SetCurrentDirectory("D:\Users\Public\Games\SWG Tiars Launcher")
 
         setGameTestInfo(serverNumber) ' At start serverNumber is always 0 for Main Server
 
@@ -147,14 +184,68 @@ Public Class Launchpad
         gameUpToDate = getVersionUpToDate(localVersion, getGameVersion(), getGameURL())
         gameServerVersion = localVersion
 
+        'See if the game has been installed 
+        If File.Exists(getGamePath() & GameClient) Then
+            gameInstalled = True
+            InstallToolStripMenuItem.Text = "Verify"
+        Else
+            gameInstalled = False
+            InstallToolStripMenuItem.Text = "Install"
+        End If
+
         ' Only ask for Test Server information if the server has a test server
         If getLauncherHasTest() Then
             testUpToDate = getVersionUpToDate(localVersion, getTestVersion(), getTestURL())
             testServerVersion = localVersion
+
+            'See if the game has been installed 
+            If File.Exists(getTestPath() & GameClient) Then
+                testInstalled = True
+            Else
+                testInstalled = False
+            End If
+
         End If
+
     End Sub
 
     Private Sub SWGEmu_Launcher_Running(sender As Object, e As EventArgs) Handles MyBase.Shown
+
+        If Not launcherUpToDate Then
+            presentStatus(StatusText, "Updating Launcher to version " & launcherServerVersion, 1)
+
+            Dim oVersion = getLauncherVersion()
+
+            Try
+                _Downloader = New WebFileDownloader
+                _Downloader.DownloadFileWithProgress(getLauncherURL() & "LaunchPad.exe", "LaunchPadNew.exe")
+                OverallProgressBar.Value = OverallProgressBar.Value + 1
+            Catch ex As Exception
+                presentStatus(StatusText, "Error updating launcher. Exiting", 10000)
+                Application.Exit()
+            End Try
+
+            presentStatus(StatusText, "Restarting Launcher", 1000)
+            ' Launch the update helper
+            Dim updater As New ProcessStartInfo
+            updater.FileName = "LauncherUpdateHelper.exe"
+
+            ' Use a hidden window
+            updater.WindowStyle = ProcessWindowStyle.Hidden
+            Try
+                Process.Start(updater)
+                ' Update registry
+                ' This should be moved to the updater
+                setLauncherVersion(launcherServerVersion)
+                ' Exit the launcher so that the updater can do its job
+                Application.Exit()
+            Catch ex As Exception
+                ' Launch was not successful so report the error and suggest a solution
+                setLauncherVersion(oVersion)
+                presentStatus(StatusText, "Could not copmplete update: Try reinstalling the launcher.", 1)
+            End Try
+
+        End If
 
         ' Refresh Patch notes
         PatchNotesBox.Refresh()
@@ -384,6 +475,42 @@ Public Class Launchpad
         IndividualProgressBar.Value = Convert.ToInt32(iNewProgress)
         ' StatusText.Text = WebFileDownloader.FormatFileSize(iNewProgress) & " of " & WebFileDownloader.FormatFileSize(IndividualProgressBar.Maximum) & " downloaded"
         Application.DoEvents()
+    End Sub
+
+    Private Sub InstallToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallToolStripMenuItem.Click
+        Select Case serverNumber
+            Case 0
+                ' verify the game install if the game has been installed
+                ' otherwise see if a legal copy of SWG is on the machine
+                '  and if so them install the game
+                If gameInstalled Then
+                    getManifest(manifest_file, num_rows, num_cols, getGameManifest())
+                    ' installVerify(manifest_file)
+                Else
+                    getManifest(manifest_file, num_rows, num_cols, getGameManifest())
+                    ' verifyLegal(manifest_file)
+                    ' installVerify(manifest_file)
+                End If
+            Case 1
+                ' verify the test install if the test has been installed
+                ' otherwise see if the main is on the machine
+                '  and if so them install the game
+                If testInstalled Then
+                    getManifest(manifest_file, num_rows, num_cols, getTestManifest())
+                    ' installVerify(manifest_file)
+                Else
+                    ' If the play client has been installed then it is safe to
+                    '  conclude that the person has a legal copy
+                    If gameInstalled Then
+                        getManifest(manifest_file, num_rows, num_cols, getTestManifest())
+                        ' installVerify(manifest_file)
+                    End If
+                End If
+            Case Else
+                presentStatus(StatusText, "Internal Error 1003", 1)
+                Return
+        End Select
+
     End Sub
 
     'End Routines to support WebFileDownloader.vb module
