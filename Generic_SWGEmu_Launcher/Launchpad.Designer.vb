@@ -34,12 +34,12 @@ Partial Class Launchpad
         Me.EULAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProfessionCalculatorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InstallToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SwitchToTestserverToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GameConfigurationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.ShutdownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShutdownLauncherAfterStartingGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SwitchToTestserverToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GameConfigurationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -62,7 +62,7 @@ Partial Class Launchpad
         '
         Me.IndividualProgressBar.BackColor = System.Drawing.Color.White
         Me.IndividualProgressBar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.IndividualProgressBar.Location = New System.Drawing.Point(10, 330)
+        Me.IndividualProgressBar.Location = New System.Drawing.Point(10, 305)
         Me.IndividualProgressBar.Name = "IndividualProgressBar"
         Me.IndividualProgressBar.Size = New System.Drawing.Size(660, 12)
         Me.IndividualProgressBar.TabIndex = 1
@@ -71,7 +71,7 @@ Partial Class Launchpad
         '
         Me.OverallProgressBar.BackColor = System.Drawing.Color.White
         Me.OverallProgressBar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.OverallProgressBar.Location = New System.Drawing.Point(10, 305)
+        Me.OverallProgressBar.Location = New System.Drawing.Point(10, 332)
         Me.OverallProgressBar.Name = "OverallProgressBar"
         Me.OverallProgressBar.Size = New System.Drawing.Size(660, 12)
         Me.OverallProgressBar.TabIndex = 2
@@ -159,6 +159,29 @@ Partial Class Launchpad
         Me.InstallToolStripMenuItem.Size = New System.Drawing.Size(63, 24)
         Me.InstallToolStripMenuItem.Text = "Install"
         '
+        'ShutdownToolStripMenuItem
+        '
+        Me.ShutdownToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ShutdownToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
+        Me.ShutdownToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ShutdownToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShutdownLauncherAfterStartingGameToolStripMenuItem, Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem})
+        Me.ShutdownToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
+        Me.ShutdownToolStripMenuItem.Name = "ShutdownToolStripMenuItem"
+        Me.ShutdownToolStripMenuItem.Size = New System.Drawing.Size(135, 24)
+        Me.ShutdownToolStripMenuItem.Text = "Launcher Setup"
+        '
+        'ShutdownLauncherAfterStartingGameToolStripMenuItem
+        '
+        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Name = "ShutdownLauncherAfterStartingGameToolStripMenuItem"
+        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
+        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Text = "Shutdown Launcher  after starting game"
+        '
+        'KeepLauncherRunningAfterStartingGameToolStripMenuItem
+        '
+        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Name = "KeepLauncherRunningAfterStartingGameToolStripMenuItem"
+        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
+        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Text = "Keep Launcher running after starting game"
+        '
         'SwitchToTestserverToolStripMenuItem
         '
         Me.SwitchToTestserverToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
@@ -189,29 +212,6 @@ Partial Class Launchpad
         Me.Button1.TabIndex = 11
         Me.Button1.Text = "Test Download"
         Me.Button1.UseVisualStyleBackColor = False
-        '
-        'ShutdownToolStripMenuItem
-        '
-        Me.ShutdownToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ShutdownToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
-        Me.ShutdownToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ShutdownToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShutdownLauncherAfterStartingGameToolStripMenuItem, Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem})
-        Me.ShutdownToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.ShutdownToolStripMenuItem.Name = "ShutdownToolStripMenuItem"
-        Me.ShutdownToolStripMenuItem.Size = New System.Drawing.Size(135, 24)
-        Me.ShutdownToolStripMenuItem.Text = "Launcher Setup"
-        '
-        'ShutdownLauncherAfterStartingGameToolStripMenuItem
-        '
-        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Name = "ShutdownLauncherAfterStartingGameToolStripMenuItem"
-        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
-        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Text = "Shutdown Launcher  after starting game"
-        '
-        'KeepLauncherRunningAfterStartingGameToolStripMenuItem
-        '
-        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Name = "KeepLauncherRunningAfterStartingGameToolStripMenuItem"
-        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
-        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Text = "Keep Launcher running after starting game"
         '
         'Launchpad
         '

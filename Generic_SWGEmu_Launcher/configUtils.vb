@@ -316,6 +316,36 @@ Module configUtils
 
     End Function 'getLauncherForum
 
+    Public Function getLauncherSOEPath() As String
+
+        Try
+            ' Get from the registry the Version String
+            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "SOEPath", Nothing)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return readValue
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return Nothing
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return Nothing
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return Nothing
+        End Try
+
+    End Function 'getLauncherSOEPath
+
     Public Function getGameVersion() As String
 
         Try

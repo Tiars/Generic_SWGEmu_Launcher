@@ -2,6 +2,8 @@
 Imports System.IO
 Imports System.Net
 Imports System.Object
+Imports System.Security.Cryptography
+Imports System.Text
 Imports System.Windows.Forms
 
 Public Class Launchpad
@@ -54,6 +56,16 @@ Public Class Launchpad
     ' 1002 Invalid value of serverNumber found when trying to launch game configuration tool
     ' 1003 Invalid value of serverNumber found when trying to install or verify the play or test clients
 
+    Private Function PrintByteArray(ByVal array() As Byte) As String
+        ' Return the checksum converted in a string 
+        Dim i As Integer
+        Dim pcksum As String = ""
+        For i = 0 To array.Length - 1
+            pcksum = pcksum & Format(String.Format("{0:X2}", array(i)))
+        Next i
+        Return pcksum
+    End Function 'PrintByteArray
+
     Private Sub getManifest(ByRef array As String, ByRef rows As Long, ByRef cols As Long, ByVal URL As String)
         Dim localLines As Object
         Dim oneLine As Object
@@ -62,13 +74,13 @@ Public Class Launchpad
         Dim request As WebRequest = WebRequest.Create(URL)
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
-                manifest_file = reader.ReadToEnd()
+                array = reader.ReadToEnd()
             End Using
         End Using
 
 
         ' split it into individual lines
-        localLines = Split(manifest_file, vbCrLf)
+        localLines = Split(array, vbCrLf)
         ' determine the number of files
         ' num_rows becoming non-zero indicates that the manifest has been downloaded and placed into memory
         rows = UBound(localLines)
@@ -77,7 +89,98 @@ Public Class Launchpad
         ' determine the number of fields
         cols = UBound(oneLine)
 
-    End Sub
+    End Sub 'getManifest
+
+    Private Function verifyLegal(ByRef array As String, ByRef rows As Integer, ByRef cols As Integer) As Boolean
+        Dim localLines As Object
+        Dim oneLine As Object
+        Dim iCount As Integer = 0
+        Dim index As Integer = 0
+        Dim legal As Boolean = False
+        Dim soeSWG As String = getLauncherSOEPath()
+
+        ' split it into individual lines
+        localLines = Split(array, vbCrLf)
+
+
+        ' Count the number of verification files
+        ' First reset the index
+        index = 0
+
+        Do While index < rows
+            'Parse out the current line into columns
+            oneLine = Split(localLines(index), ",")
+
+
+            'Check to see if it is a file to verify the legal copy
+            If oneLine(1) = "2" Then
+                iCount = iCount + 1
+            End If
+            index = index + 1
+        Loop
+
+        ' Initialize the overall progress bar now that the number of 
+        ' files are known
+        OverallProgressBar.Value = 0
+        OverallProgressBar.Maximum = iCount
+
+        ' Initialize a md5 hash object. 
+        Dim md5Hash As MD5 = MD5.Create()
+        Dim hashValue() As Byte
+
+        ' Verify the files
+        ' First reset the index
+        index = 0
+
+        Do While index < rows
+
+            'Parse out the current line into columns
+            oneLine = Split(localLines(index), ",")
+
+            'Check to see if it is a file to verify the legal copy
+            If oneLine(1) = "2" Then
+                'Since there are files to check to see if there is a legal copy in the manifest
+                'change the default return from False to True
+                legal = True
+
+                'Display progress
+                'Bump the overall progress
+                OverallProgressBar.Value = OverallProgressBar.Value + 1
+                'Display the file being checked
+                presentStatus(StatusText, soeSWG & oneLine(0), 1)
+
+                ' See if the file exists
+                If File.Exists(soeSWG & oneLine(0)) Then
+                    ' Create a fileStream for the file. 
+                    Dim fileStream As FileStream = File.Open(soeSWG & oneLine(0), FileMode.Open, FileAccess.Read, FileShare.None)
+
+                    ' Be sure it's positioned to the beginning of the stream.
+                    fileStream.Position = 0
+                    ' Compute the hash of the fileStream.
+                    hashValue = md5Hash.ComputeHash(fileStream)
+
+                    ' Close the file.
+                    fileStream.Close()
+
+                    ' Verify that the hash values match
+
+                    If Not StrComp(oneLine(2), PrintByteArray(hashValue), CompareMethod.Text) = 0 Then
+                        ' File fails checksum so return that no legal copy was found
+                        OverallProgressBar.Value = OverallProgressBar.Maximum
+                        Return False
+                    End If
+                Else
+                    OverallProgressBar.Value = OverallProgressBar.Maximum
+                    Return False
+                End If
+            End If
+            index = index + 1
+        Loop
+
+        OverallProgressBar.Value = OverallProgressBar.Maximum
+        Return legal
+
+    End Function 'verifyLegal
 
     Private Sub getGamenotesText()
         Dim request As WebRequest = WebRequest.Create(getGamePatchNotes())
@@ -476,7 +579,10 @@ Public Class Launchpad
         Application.DoEvents()
     End Sub
 
+    'End Routines to support WebFileDownloader.vb module
+
     Private Sub InstallToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallToolStripMenuItem.Click
+
         Select Case serverNumber
             Case 0
                 ' verify the game install if the game has been installed
@@ -487,8 +593,10 @@ Public Class Launchpad
                     ' installVerify(manifest_file)
                 Else
                     getManifest(manifest_file, num_rows, num_cols, getGameManifest())
-                    ' verifyLegal(manifest_file)
-                    ' installVerify(manifest_file)
+                    ' get SOE SWG location and set environment variable
+                    If verifyLegal(manifest_file, num_rows, num_cols) Then
+                        ' installVerify(manifest_file, num_rows, num_cols)
+                    End If
                 End If
             Case 1
                 ' verify the test install if the test has been installed
@@ -496,7 +604,7 @@ Public Class Launchpad
                 '  and if so them install the game
                 If testInstalled Then
                     getManifest(manifest_file, num_rows, num_cols, getTestManifest())
-                    ' installVerify(manifest_file)
+                    ' installVerify(manifest_file, num_rows, num_cols)
                 Else
                     ' If the play client has been installed then it is safe to
                     '  conclude that the person has a legal copy
@@ -516,6 +624,5 @@ Public Class Launchpad
                Format(num_cols + 1, "G") & " Elements")
     End Sub
 
-    'End Routines to support WebFileDownloader.vb module
 
 End Class

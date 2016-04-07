@@ -17,7 +17,8 @@ So instead of storing some configuration information in an XML config file the p
 
 With this change the relationship between the launcher and the game code will be removed. In the SWGChoice version of the launcher the instal and execute code of the launcher required that the game code be installed in the same subdirectory that had the launcher. The requested location to install the game will now be requested and stored in the registry for future use.
 
-Based on research the SOE installer stores the path to the game in the "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\StarWarsGalaxies\Path", or HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\SWG_Client\Path" but I think that this may be set by the SWGEmu launcher, Location. The existance of this path will be made part of the verification. I have a clean install of Windows 10 that has never had SWG or SWGEmu installed on it so the registry entry will be verified before this project is considered complete.
+Based on research the SOE installer stores the path to the game in the "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\StarWarsGalaxies\Path" and HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\SWG_Client\Path". This was observerd with a clean install of Windows 10 and then
+installing from the original 3 CD set.
 
 The installer will set up the following Registry entries:
 (The value of <SWG Emu> should be changed for each SWGEmu game provider.)
@@ -111,29 +112,13 @@ The manifest is a CSV file with four fields.
 
 Field 1 = Relative path to file or directory
           Registry entry
-Field 2 = Location Flag
-Field 3 = Action Flag
-Field 4 = Action 0 - 1, 6 - Comment
+Field 2 = Action Flag
+Field 3 = Action 0 - 1, 6 - Comment
           Action 2 - 4    - MD5 Checksum
           Action 5        - String Value for registry entry
 
-In the Choice Launcher one flag was used. This produced a complex system that
-was not easy to understand since it combined where and what information.
-For the generic version I use two flags, one for what to do and one for where.
 
-First Flag - Location
-
-0  = Launcher install directory
-     These files are downloaded from getLauncherURL() to the directory that
-     the launcher is running in. When the Launcher version changes this manifest
-     location is processed before kicking off the launcher updater helper.
-1  = Play server install directory 
-     These files are downloaded from getGameURL() to getGamePath()
-2  = Test server install directory 
-     These files are downloaded from getTestURL() to getTestPath()
-3+ = Set aside for adding support for other Test Server locations
-
-Second Flag - Action
+Flag - Action
 
 0  = Delete file or directory if it exists
      This flag is allocated to allow for cleaning up a directory. For example
@@ -194,7 +179,7 @@ Second Flag - Action
      catagory 2 also so that you make sure that the correct version for
      the client is downloaded with the client.
 
-     The Launcher location has no need to use this action.
+     The Launcher manifest has no need to use this action.
 
 3  = SOE static files
      This catagory is all of the client executables, dlls, config files
@@ -210,7 +195,7 @@ Second Flag - Action
      later versions of the install disks or still have their fully installed
      directory from when they played the live game.
 
-     The Launcher location has no need to use this action.
+     The Launcher manifest has no need to use this action.
 
 4  = Server extension files
      For servers that are adding items to their server this is the catagory
@@ -223,16 +208,20 @@ Second Flag - Action
      different between the play and test versions of the server. All of these 
      are reasons to place them into this catagory.
 
-     The Launcher location would use this for supplemental files, like a 
+     The Launcher manifest would use this for supplemental files, like a 
      profession calculator stored in the launcher directory.
 
 5  = Add new registry entry
      Location has no real meaning with this action. Location 0 is recommended.
 
+     Only used by the Launcher manifest
+
 6  = Delete registry entry
      Location has no real meaning with this action. Location 0 is recommended.
 
-7+ = Set aside for 
+     Only used by the Launcher manifest
+
+7+ = Set aside for future use
 
 # TestServer directory
 
