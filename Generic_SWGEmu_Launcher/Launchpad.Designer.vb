@@ -48,7 +48,7 @@ Partial Class Launchpad
         Me.StatusText.BackColor = System.Drawing.SystemColors.WindowText
         Me.StatusText.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.StatusText.CausesValidation = False
-        Me.StatusText.ForeColor = System.Drawing.SystemColors.Window
+        Me.StatusText.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.StatusText.Location = New System.Drawing.Point(10, 280)
         Me.StatusText.Margin = New System.Windows.Forms.Padding(5)
         Me.StatusText.Multiline = True
@@ -92,7 +92,7 @@ Partial Class Launchpad
         Me.StatusTextBox.BackColor = System.Drawing.Color.Black
         Me.StatusTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.StatusTextBox.ForeColor = System.Drawing.Color.Yellow
-        Me.StatusTextBox.Location = New System.Drawing.Point(695, 80)
+        Me.StatusTextBox.Location = New System.Drawing.Point(719, 80)
         Me.StatusTextBox.Name = "StatusTextBox"
         Me.StatusTextBox.ReadOnly = True
         Me.StatusTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None
@@ -125,7 +125,7 @@ Partial Class Launchpad
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(0)
         Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.MenuStrip1.Size = New System.Drawing.Size(898, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(922, 24)
         Me.MenuStrip1.TabIndex = 10
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -221,8 +221,8 @@ Partial Class Launchpad
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange
         Me.BackColor = System.Drawing.Color.Black
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ClientSize = New System.Drawing.Size(908, 352)
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.ClientSize = New System.Drawing.Size(932, 353)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.startGameButton)
         Me.Controls.Add(Me.StatusTextBox)
@@ -231,8 +231,9 @@ Partial Class Launchpad
         Me.Controls.Add(Me.IndividualProgressBar)
         Me.Controls.Add(Me.StatusText)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.ForeColor = System.Drawing.SystemColors.Window
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
+        Me.ForeColor = System.Drawing.Color.Yellow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.MaximizeBox = False

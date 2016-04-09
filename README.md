@@ -95,8 +95,12 @@ HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\Calc
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\HasEULA
 	Is there a EULA for this server
 HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\EULA
-	The URL to the EULA. Since URLs can point to a local file there is no need
-	for this to reside on a web server.
+	The URL to the EULA. The user should have a copy to view even if the server
+        is off line so this will be stored in the Launcher Directory.
+HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\readEULA
+	Flags if the user has read the EULA. This is presented after each update
+        to the EULA and when the game is installed. Set to Yes for accepted and No
+        if declined.
 
 Update
 
@@ -211,17 +215,20 @@ Flag - Action
      The Launcher manifest would use this for supplemental files, like a 
      profession calculator stored in the launcher directory.
 
-5  = Add new registry entry
-     Location has no real meaning with this action. Location 0 is recommended.
+5  = Add new/Update existing registry entry
 
      Only used by the Launcher manifest
 
 6  = Delete registry entry
-     Location has no real meaning with this action. Location 0 is recommended.
 
      Only used by the Launcher manifest
 
-7+ = Set aside for future use
+7  = EULA.
+     If the EULA has changed the readEULA flag in the registry is set to False
+     and it is presented after the processing is complete. Otherwise it is treated
+     as flag 4. It is always downloaded to the Launcher Directory. 
+
+8+ = Set aside for future use
 
 # TestServer directory
 
@@ -267,3 +274,34 @@ legal copy when installing the test client.
 Since the static .tre files up through Publish 14.1 only need one copy, the test Server
 will save space by pointing to those .tre files in the play directory. So the test client
 directory will be smaller as will an efficient manifest.
+
+# EULA for Server
+
+Since the owner of the SWGChoice server was a lawyer he wanted a clear End User License
+Agreement (EULA) for users of the server. Currently the SWGEmu servers Nova and Basilisk
+do not have a EULA that they present through the launcher. As a compromise having a EULA
+for the server is configurable.
+
+When the Launcher is installed the HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\HasEULA
+registry entry states if the server uses a EULA. If this is set an option to present the
+EULA is made visible and a EULA.rtf file is expectec to be in the same directory as the
+launcher executable.
+
+If a server is using a EULA and wants to change it the process is simple. Change it on
+the server, update the manifest checksum for the file and change the launcher
+version number. This will cause the mannifest to be downloaded and only the EULA.rtf
+will not match the checksum so it will be downloaded. If a new EULA has been downloaded
+the HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\readEULA registry entry will be set
+to No and the EULA will be presented to be read and accepted again before the launcher
+will launch the game.
+
+If a server is using a EULA and wants to stop using it the process is similar. Change
+the Launcher version file so that the manifest is downloaded. Change the entry for the
+EULA.rtf file flag from 7 to 0 to have it delete the EULA.rtf file. Then create an
+action 5 registry flag for HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\HasEULA to
+"No". The option to read the EULA will be removed and the HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\readEULA will not be checked.
+
+If a server is not using a EULA and wants to start using one the process is easy. Change
+the Launcher version file so that the manifest is downloaded. Create an action flag 7
+for the EULA.rtf so that it is copied down and use an action 5 registry flag for HKEY_CURRENT_USER\SOFTWARE\<SWG Emu>\Launcher\HasEULA to "Yes". The user will be asked
+to accept or decline the EULA.

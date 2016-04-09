@@ -93,6 +93,12 @@
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="configUtils.vb" />
+    <Compile Include="confirmEULA.Designer.vb">
+      <DependentUpon>confirmEULA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="confirmEULA.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Launchpad.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     <Compile Include="WebFileDownloader.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="confirmEULA.resx">
+      <DependentUpon>confirmEULA.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Launchpad.resx">
       <DependentUpon>Launchpad.vb</DependentUpon>
     </EmbeddedResource>

@@ -48,6 +48,8 @@ Public Class Launchpad
     Dim one_line As Object
     Dim num_cols As Long = 0
 
+    Dim EulaForm As confirmEULA
+
     'DECLARE THIS WITHEVENTS SO WE GET EVENTS ABOUT DOWNLOAD PROGRESS
     Private WithEvents _Downloader As WebFileDownloader
 
@@ -98,6 +100,8 @@ Public Class Launchpad
         Dim index As Integer = 0
         Dim legal As Boolean = False
         Dim soeSWG As String = getLauncherSOEPath()
+
+        presentStatus(StatusText, "Checking " & soeSWG & "For Legal copy of Star Wars Galaxies", 2000)
 
         ' split it into individual lines
         localLines = Split(array, vbCrLf)
@@ -411,20 +415,11 @@ Public Class Launchpad
     End Sub ' ProfessionCalculatorToolStripMenuItem_Click
 
     Private Sub EULAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EULAToolStripMenuItem.Click
-        'Launch Browser showing EULA
+        'Open the EULA and confirm reading
+        EulaForm = New confirmEULA()
 
-        If Not getLauncherHasEULA() Then
-            ' Should not get here but if we do simply return
-            Return
-        End If
-
-        'Launch the system default browser and go to the server forums
-        Try
-            Process.Start(getLauncherEULA())
-        Catch ex As Exception
-            ' Failed to launch the system default browser and connect to the forums. Report the problem.
-            presentStatus(StatusText, "Could not Launch a web browser to the EULA.", 1)
-        End Try
+        'Present the EULA
+        EulaForm.Show()
 
     End Sub ' EULAToolStripMenuItem_Click
 
