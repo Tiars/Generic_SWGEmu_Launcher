@@ -810,7 +810,7 @@ Public Class configUtils
 
         Try
             ' Get from the registry the local path to the game files
-            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Test", "Path", Nothing)
+            Dim readValue = getGamePath() & "Testserver\"
 
             ' Will not get here if exception is thrown
 
