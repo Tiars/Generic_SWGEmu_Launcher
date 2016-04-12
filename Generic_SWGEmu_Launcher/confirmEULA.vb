@@ -9,6 +9,7 @@ Imports System.Windows.Forms
 Public Class confirmEULA
 
     Dim mClass As New Launchpad
+    Dim cUtils As New configUtils
 
     Private Sub confirmEULA_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Open the file as Read Only Shared
@@ -25,7 +26,7 @@ Public Class confirmEULA
     Private Sub ButtonAccept_Click(sender As Object, e As EventArgs) Handles ButtonAccept.Click
 
         ' Send event that the EULA was Accepted
-        setLauncherReadEula("Yes")
+        cUtils.setLauncherReadEula("Yes")
 
         ' Close the window now that we have an answer
         'Me.Hide()
@@ -36,7 +37,7 @@ Public Class confirmEULA
     Private Sub ButtonDecline_Click(sender As Object, e As EventArgs) Handles ButtonDecline.Click
 
         ' Send event that the EULA was Declined
-        setLauncherReadEula("No")
+        cUtils.setLauncherReadEula("No")
 
         ' Close the window now that we have an answer
         'Me.Hide()

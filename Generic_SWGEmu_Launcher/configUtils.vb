@@ -16,7 +16,7 @@ Imports System.Windows.Forms
 Imports System.Xml
 Imports System.Xml.Serialization
 
-Module configUtils
+Public Class configUtils
 
     Public Const SWGServer As String = "SWG Tiars"
 
@@ -836,4 +836,4 @@ Module configUtils
 
     End Function 'getTestPath
 
-End Module
+End Class

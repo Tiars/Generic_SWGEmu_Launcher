@@ -2,7 +2,7 @@
 Imports System.Text
 Imports System.Threading
 
-Module textUtils
+Public Class textUtils
 
     Public Sub clearStatus(ByVal text As TextBox)
         ' Clear and Refresh the text box
@@ -54,4 +54,4 @@ Module textUtils
 
     End Sub 'blankLine
 
-End Module
+End Class

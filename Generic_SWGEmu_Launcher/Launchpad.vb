@@ -48,6 +48,9 @@ Public Class Launchpad
     Dim one_line As Object
     Dim num_cols As Long = 0
 
+    Dim cUtils As New configUtils
+    Dim tUtils As New textUtils
+
     Dim EulaForm As confirmEULA
 
     'DECLARE THIS WITHEVENTS SO WE GET EVENTS ABOUT DOWNLOAD PROGRESS
@@ -99,9 +102,9 @@ Public Class Launchpad
         Dim iCount As Integer = 0
         Dim index As Integer = 0
         Dim legal As Boolean = False
-        Dim soeSWG As String = getLauncherSOEPath()
+        Dim soeSWG As String = cUtils.getLauncherSOEPath()
 
-        presentStatus(StatusText, "Checking " & soeSWG & "For Legal copy of Star Wars Galaxies", 2000)
+        tUtils.presentStatus(StatusText, "Checking " & soeSWG & "For Legal copy of Star Wars Galaxies", 2000)
 
         ' split it into individual lines
         localLines = Split(array, vbCrLf)
@@ -151,7 +154,7 @@ Public Class Launchpad
                 'Bump the overall progress
                 OverallProgressBar.Value = OverallProgressBar.Value + 1
                 'Display the file being checked
-                presentStatus(StatusText, soeSWG & oneLine(0), 1)
+                tUtils.presentStatus(StatusText, soeSWG & oneLine(0), 1)
 
                 ' See if the file exists
                 If File.Exists(soeSWG & oneLine(0)) Then
@@ -187,7 +190,7 @@ Public Class Launchpad
     End Function 'verifyLegal
 
     Private Sub getGamenotesText()
-        Dim request As WebRequest = WebRequest.Create(getGamePatchNotes())
+        Dim request As WebRequest = WebRequest.Create(cUtils.getGamePatchNotes())
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
                 PatchNotesBox.Rtf = reader.ReadToEnd()
@@ -196,7 +199,7 @@ Public Class Launchpad
     End Sub 'getGamenotesText
 
     Private Sub getGameStatusText()
-        Dim request As WebRequest = WebRequest.Create(getGameStatus())
+        Dim request As WebRequest = WebRequest.Create(cUtils.getGameStatus())
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
                 StatusTextBox.Rtf = reader.ReadToEnd()
@@ -205,7 +208,7 @@ Public Class Launchpad
     End Sub 'getGameStatusText
 
     Private Sub getTestnotesText()
-        Dim request As WebRequest = WebRequest.Create(getTestPatchNotes())
+        Dim request As WebRequest = WebRequest.Create(cUtils.getTestPatchNotes())
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
                 PatchNotesBox.Rtf = reader.ReadToEnd()
@@ -214,7 +217,7 @@ Public Class Launchpad
     End Sub 'getTestnotesText
 
     Private Sub getTestStatusText()
-        Dim request As WebRequest = WebRequest.Create(getTestStatus())
+        Dim request As WebRequest = WebRequest.Create(cUtils.getTestStatus())
         Using response As WebResponse = request.GetResponse()
             Using reader As New StreamReader(response.GetResponseStream())
                 StatusTextBox.Rtf = reader.ReadToEnd()
@@ -265,33 +268,33 @@ Public Class Launchpad
         setGameTestInfo(serverNumber) ' At start serverNumber is always 0 for Main Server
 
         ' Hide unused toolbar items
-        If Not getLauncherHasForum() Then
+        If Not cUtils.getLauncherHasForum() Then
             ' Item not configured so hide
             ForumToolStripMenuItem.Visible = False
         End If
-        If Not getLauncherHasEULA() Then
+        If Not cUtils.getLauncherHasEULA() Then
             ' Item not configured so hide
             EULAToolStripMenuItem.Visible = False
         End If
-        If Not getLauncherHasCalc() Then
+        If Not cUtils.getLauncherHasCalc() Then
             ' Item not configured so hide
             ProfessionCalculatorToolStripMenuItem.Visible = False
         End If
-        If Not getLauncherHasTest() Then
+        If Not cUtils.getLauncherHasTest() Then
             ' Item not configured so hide
             SwitchToTestserverToolStripMenuItem.Visible = False
         End If
 
         Dim localVersion As String = Nothing
 
-        launcherUpToDate = getVersionUpToDate(localVersion, getLauncherVersion(), getLauncherURL())
+        launcherUpToDate = getVersionUpToDate(localVersion, cUtils.getLauncherVersion(), cUtils.getLauncherURL())
         launcherServerVersion = localVersion
 
-        gameUpToDate = getVersionUpToDate(localVersion, getGameVersion(), getGameURL())
+        gameUpToDate = getVersionUpToDate(localVersion, cUtils.getGameVersion(), cUtils.getGameURL())
         gameServerVersion = localVersion
 
         'See if the game has been installed 
-        If File.Exists(getGamePath() & GameClient) Then
+        If File.Exists(cUtils.getGamePath() & GameClient) Then
             gameInstalled = True
             InstallToolStripMenuItem.Text = "Verify"
         Else
@@ -300,12 +303,12 @@ Public Class Launchpad
         End If
 
         ' Only ask for Test Server information if the server has a test server
-        If getLauncherHasTest() Then
-            testUpToDate = getVersionUpToDate(localVersion, getTestVersion(), getTestURL())
+        If cUtils.getLauncherHasTest() Then
+            testUpToDate = getVersionUpToDate(localVersion, cUtils.getTestVersion(), cUtils.getTestURL())
             testServerVersion = localVersion
 
             'See if the game has been installed 
-            If File.Exists(getTestPath() & GameClient) Then
+            If File.Exists(cUtils.getTestPath() & GameClient) Then
                 testInstalled = True
             Else
                 testInstalled = False
@@ -318,20 +321,20 @@ Public Class Launchpad
     Private Sub SWGEmu_Launcher_Running(sender As Object, e As EventArgs) Handles MyBase.Shown
 
         If Not launcherUpToDate Then
-            presentStatus(StatusText, "Updating Launcher to version " & launcherServerVersion, 1)
+            tUtils.presentStatus(StatusText, "Updating Launcher to version " & launcherServerVersion, 1)
 
-            Dim oVersion = getLauncherVersion()
+            Dim oVersion = cUtils.getLauncherVersion()
 
             Try
                 _Downloader = New WebFileDownloader
-                _Downloader.DownloadFileWithProgress(getLauncherURL() & "LaunchPad.exe", "LaunchPadNew.exe")
+                _Downloader.DownloadFileWithProgress(cUtils.getLauncherURL() & "LaunchPad.exe", "LaunchPadNew.exe")
                 OverallProgressBar.Value = OverallProgressBar.Value + 1
             Catch ex As Exception
-                presentStatus(StatusText, "Error updating launcher. Exiting", 10000)
+                tUtils.presentStatus(StatusText, "Error updating launcher. Exiting", 10000)
                 Application.Exit()
             End Try
 
-            presentStatus(StatusText, "Restarting Launcher", 1000)
+            tUtils.presentStatus(StatusText, "Restarting Launcher", 1000)
             ' Launch the update helper
             Dim updater As New ProcessStartInfo
             updater.FileName = "LauncherUpdateHelper.exe"
@@ -342,13 +345,13 @@ Public Class Launchpad
                 Process.Start(updater)
                 ' Update registry
                 ' This should be moved to the updater
-                setLauncherVersion(launcherServerVersion)
+                cUtils.setLauncherVersion(launcherServerVersion)
                 ' Exit the launcher so that the updater can do its job
                 Application.Exit()
             Catch ex As Exception
                 ' Launch was not successful so report the error and suggest a solution
-                setLauncherVersion(oVersion)
-                presentStatus(StatusText, "Could not copmplete update: Try reinstalling the launcher.", 1)
+                cUtils.setLauncherVersion(oVersion)
+                tUtils.presentStatus(StatusText, "Could not copmplete update: Try reinstalling the launcher.", 1)
             End Try
 
         End If
@@ -365,7 +368,7 @@ Public Class Launchpad
         ' Switch between live and Test Server
 
         ' First check to see if there is a Test Server
-        If getLauncherHasTest() Then
+        If cUtils.getLauncherHasTest() Then
             If serverNumber = 0 Then ' If set to Main
                 serverNumber = 1 ' Set to Test Server 1
             Else
@@ -390,14 +393,14 @@ Public Class Launchpad
     Private Sub ProfessionCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProfessionCalculatorToolStripMenuItem.Click
         'Launch Kodian's Profession Calculator
 
-        If Not getLauncherHasCalc() Then
+        If Not cUtils.getLauncherHasCalc() Then
             ' Should not get here but if we do simply return
             Return
         End If
 
         ' Get the full path to the profession calculator executable
 
-        Dim filePath As String = getLauncherCalc()
+        Dim filePath As String = cUtils.getLauncherCalc()
 
         ' New ProcessStartInfo created
         Dim calc As New ProcessStartInfo
@@ -409,7 +412,7 @@ Public Class Launchpad
             Process.Start(calc)
         Catch ex As Exception
             ' Launch was not successful so report the error and suggest a solution
-            presentStatus(StatusText, "Could not Launch Profession Calculator: Try reinstalling the launcher.", 1)
+            tUtils.presentStatus(StatusText, "Could not Launch Profession Calculator: Try reinstalling the launcher.", 1)
         End Try
 
     End Sub ' ProfessionCalculatorToolStripMenuItem_Click
@@ -426,17 +429,17 @@ Public Class Launchpad
     Private Sub ForumToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ForumToolStripMenuItem.Click
         'Launch Browser to the Forums
 
-        If Not getLauncherHasForum() Then
+        If Not cUtils.getLauncherHasForum() Then
             ' Should not get here but if we do simply return
             Return
         End If
 
         'Launch the system default browser and go to the server forums
         Try
-            Process.Start(getLauncherForum())
+            Process.Start(cUtils.getLauncherForum())
         Catch ex As Exception
             ' Failed to launch the system default browser and connect to the forums. Report the problem.
-            presentStatus(StatusText, "Could not Launch a web browser to the Forums.", 1)
+            tUtils.presentStatus(StatusText, "Could not Launch a web browser to the Forums.", 1)
         End Try
 
     End Sub ' ForumToolStripMenuItem_Click
@@ -450,11 +453,11 @@ Public Class Launchpad
         ' Using a case statement so that this is ready for more than one test server location
         Select Case serverNumber
             Case 0
-                filepath = getGamePath()
+                filepath = cUtils.getGamePath()
             Case 1
-                filepath = getTestPath()
+                filepath = cUtils.getTestPath()
             Case Else
-                presentStatus(StatusText, "Internal Error 1001", 1)
+                tUtils.presentStatus(StatusText, "Internal Error 1001", 1)
                 Return
         End Select
 
@@ -470,7 +473,7 @@ Public Class Launchpad
             Process.Start(calc)
         Catch ex As Exception
             ' Launch was not successful so report the error and suggest a solution
-            presentStatus(StatusText, "Could not start the game: Try verifying the install.", 1)
+            tUtils.presentStatus(StatusText, "Could not start the game: Try verifying the install.", 1)
         End Try
 
     End Sub ' startGameButton_Click
@@ -484,11 +487,11 @@ Public Class Launchpad
         ' Using a case statement so that this is ready for more than one test server location
         Select Case serverNumber
             Case 0
-                filepath = getGamePath()
+                filepath = cUtils.getGamePath()
             Case 1
-                filepath = getTestPath()
+                filepath = cUtils.getTestPath()
             Case Else
-                presentStatus(StatusText, "Internal Error 1002", 1)
+                tUtils.presentStatus(StatusText, "Internal Error 1002", 1)
                 Return
         End Select
 
@@ -504,7 +507,7 @@ Public Class Launchpad
             Process.Start(calc)
         Catch ex As Exception
             ' Launch was not successful so report the error and suggest a solution
-            presentStatus(StatusText, "Could not start the game configuration tool: Try verifying the install.", 1)
+            tUtils.presentStatus(StatusText, "Could not start the game configuration tool: Try verifying the install.", 1)
         End Try
 
     End Sub ' GameConfigurationToolStripMenuItem_Click
@@ -584,10 +587,10 @@ Public Class Launchpad
                 ' otherwise see if a legal copy of SWG is on the machine
                 '  and if so them install the game
                 If gameInstalled Then
-                    getManifest(manifest_file, num_rows, num_cols, getGameManifest())
+                    getManifest(manifest_file, num_rows, num_cols, cUtils.getGameManifest())
                     ' installVerify(manifest_file)
                 Else
-                    getManifest(manifest_file, num_rows, num_cols, getGameManifest())
+                    getManifest(manifest_file, num_rows, num_cols, cUtils.getGameManifest())
                     ' get SOE SWG location and set environment variable
                     If verifyLegal(manifest_file, num_rows, num_cols) Then
                         ' installVerify(manifest_file, num_rows, num_cols)
@@ -598,18 +601,18 @@ Public Class Launchpad
                 ' otherwise see if the main is on the machine
                 '  and if so them install the game
                 If testInstalled Then
-                    getManifest(manifest_file, num_rows, num_cols, getTestManifest())
+                    getManifest(manifest_file, num_rows, num_cols, cUtils.getTestManifest())
                     ' installVerify(manifest_file, num_rows, num_cols)
                 Else
                     ' If the play client has been installed then it is safe to
                     '  conclude that the person has a legal copy
                     If gameInstalled Then
-                        getManifest(manifest_file, num_rows, num_cols, getTestManifest())
+                        getManifest(manifest_file, num_rows, num_cols, cUtils.getTestManifest())
                         ' installVerify(manifest_file)
                     End If
                 End If
             Case Else
-                presentStatus(StatusText, "Internal Error 1003", 1)
+                tUtils.presentStatus(StatusText, "Internal Error 1003", 1)
                 Return
         End Select
 
