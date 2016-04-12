@@ -52,7 +52,7 @@ Partial Class SplashScreen
         Me.Version.Name = "Version"
         Me.Version.Size = New System.Drawing.Size(454, 21)
         Me.Version.TabIndex = 4
-        Me.Version.Text = "Version 0.00.000"
+        Me.Version.Text = """Version {0}.{1:00}.{2:000}.{3:0000}"""
         '
         'launcherName
         '
@@ -84,6 +84,7 @@ Partial Class SplashScreen
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+        Me.Name = "SplashScreen"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.ResumeLayout(False)
