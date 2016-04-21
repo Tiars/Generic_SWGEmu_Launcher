@@ -19,6 +19,19 @@ Imports System.Xml.Serialization
 Public Class configUtils
 
     Public Const SWGServer As String = "SWG Tiars"
+    Public clientPath As String
+
+    Public Function getServerName() As String
+        Return SWGServer
+    End Function 'getServerName
+
+    Public Function getClientPath() As String
+        Return clientPath
+    End Function 'getClientPath
+
+    Public Sub setClientPath(ByVal path As String)
+        clientPath = path
+    End Sub 'setClientPath
 
     Public Function getSWGLocation() As String
 
@@ -246,31 +259,7 @@ Public Class configUtils
 
     Public Function getLauncherEULA() As String
 
-        Try
-            ' Get from the registry the Version String
-            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "EULA", Nothing)
-
-            ' Will not get here if exception is thrown
-
-            ' Check to see if the entry is empty
-            ' Debug code
-            'If readValue Is Nothing Then
-            '    Return Nothing
-            'End If
-
-            ' Return the value, Nothing or Error message
-            Return readValue
-
-        Catch e As SecurityException
-            ' Handle the user does not have permissions to read from registry keys
-            Return Nothing
-        Catch e As ArgumentNullException
-            ' Handle the name of the key is Nothing
-            Return Nothing
-        Catch e As ArgumentException
-            ' Handle the key name exceeds the 255-character limit 
-            Return Nothing
-        End Try
+        Return "EULA.txt"
 
     End Function 'getLauncherEULA
 
@@ -381,74 +370,6 @@ Public Class configUtils
         End Try
 
     End Function 'getLauncherForum
-
-    Public Function getLauncherSOEPath() As String
-
-        Try
-            ' Get from the registry the location of the Cached version of the SOE Install location
-            Dim readValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "SOEPath", Nothing)
-
-            ' Will not get here if exception is thrown
-
-            ' Check to see if the entry is empty
-            If readValue Is Nothing Then
-                ' Get from the registry the location set by the SOE Installer
-                readValue = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\StarWarsGalaxies", "Path", Nothing)
-
-                ' Just in case the SOE Installer did not set it
-                If readValue Is Nothing Then
-
-                    Dim FolderBrowserDialog As New FolderBrowserDialog()
-                    FolderBrowserDialog.RootFolder = Environment.SpecialFolder.Desktop
-
-                    ' Start with the default directory that SOE would have used
-                    FolderBrowserDialog.SelectedPath = "C:\Program Files (x86)\StarWarsGalaxies"
-                    FolderBrowserDialog.Description = "Select Retail Star Wars Galaxies Location"
-
-                    ' Ask for the location of the SWG Retail code installation
-                    '                    presentStatus("Locate the installed retail version of Star Wars Galaxies", 1)
-                    If (FolderBrowserDialog.ShowDialog() = Windows.Forms.DialogResult.OK) Then
-                        readValue = FolderBrowserDialog.SelectedPath
-                    Else
-                        readValue = Nothing
-                    End If
-                End If
-                If Not readValue Is Nothing Then
-                    ' Found a path so append "\" to the end of the path
-                    readValue = readValue & "\"
-                End If
-            End If
-
-            ' Use SwgClientSetup_r.exe for the best check of a clean install
-            '  The problem is that if the player installed from Steam or ran the 
-            '  setup while the game was live this file is cleaned up and would be missing
-            '  so coding it to use bottom.tre to indicate that the files are actually in
-            '  the indicated directory
-            '
-            'If Not File.Exists(readValue & "SwgClientSetup_r.exe") Then
-            If Not File.Exists(readValue & "bottom.tre") Then
-                ' If the file does not exist clear the location information before returning
-                readValue = Nothing
-            End If
-
-            ' We have a path so set the cached location
-            My.Computer.Registry.GetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Launcher", "SOEPath", readValue)
-
-            ' Return the value, Nothing or Error message
-            Return readValue
-
-        Catch e As SecurityException
-            ' Handle the user does not have permissions to read from registry keys
-            Return Nothing
-        Catch e As ArgumentNullException
-            ' Handle the name of the key is Nothing
-            Return Nothing
-        Catch e As ArgumentException
-            ' Handle the key name exceeds the 255-character limit 
-            Return Nothing
-        End Try
-
-    End Function 'getLauncherSOEPath
 
     Public Function getGameVersion() As String
 
@@ -641,6 +562,36 @@ Public Class configUtils
         End Try
 
     End Function 'getGamePath
+
+    Public Sub setGamePath(ByVal setValue As String)
+
+        Try
+            ' Get from the registry the Version String
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\SOFTWARE\" & SWGServer & "\Game", "Path", setValue)
+
+            ' Will not get here if exception is thrown
+
+            ' Check to see if the entry is empty
+            ' Debug code
+            'If readValue Is Nothing Then
+            '    Return Nothing
+            'End If
+
+            ' Return the value, Nothing or Error message
+            Return
+
+        Catch e As SecurityException
+            ' Handle the user does not have permissions to read from registry keys
+            Return
+        Catch e As ArgumentNullException
+            ' Handle the name of the key is Nothing
+            Return
+        Catch e As ArgumentException
+            ' Handle the key name exceeds the 255-character limit 
+            Return
+        End Try
+
+    End Sub 'setGamePath
 
     Public Function getTestVersion() As String
 

@@ -102,7 +102,7 @@ Public Class Launchpad
         Dim iCount As Integer = 0
         Dim index As Integer = 0
         Dim legal As Boolean = False
-        Dim soeSWG As String = cUtils.getLauncherSOEPath()
+        Dim soeSWG As String = cUtils.getSWGLocation()
 
         tUtils.presentStatus(StatusText, "Checking " & soeSWG & "For Legal copy of Star Wars Galaxies", 2000)
 
@@ -562,33 +562,6 @@ Public Class Launchpad
         OverallProgressBar.Value = OverallProgressBar.Maximum
     End Sub
 
-    'Start Routines to support WebFileDownloader.vb module
-
-    'FIRES WHEN WE HAVE GOTTEN THE DOWNLOAD SIZE, SO WE KNOW WHAT BOUNDS TO GIVE THE PROGRESS BAR
-    Private Sub _Downloader_FileDownloadSizeObtained(ByVal iFileSize As Long) Handles _Downloader.FileDownloadSizeObtained
-        IndividualProgressBar.Value = 0
-        IndividualProgressBar.Maximum = Convert.ToInt32(iFileSize)
-    End Sub
-
-    'FIRES WHEN DOWNLOAD IS COMPLETE
-    Private Sub _Downloader_FileDownloadComplete() Handles _Downloader.FileDownloadComplete
-        IndividualProgressBar.Value = IndividualProgressBar.Maximum
-    End Sub
-
-    'FIRES WHEN DOWNLOAD FAILES. PASSES IN EXCEPTION INFO
-    Private Sub _Downloader_FileDownloadFailed(ByVal ex As System.Exception) Handles _Downloader.FileDownloadFailed
-        MessageBox.Show("An error has occured during download: " & ex.Message)
-    End Sub
-
-    'FIRES WHEN MORE OF THE FILE HAS BEEN DOWNLOADED
-    Private Sub _Downloader_AmountDownloadedChanged(ByVal iNewProgress As Long) Handles _Downloader.AmountDownloadedChanged
-        IndividualProgressBar.Value = Convert.ToInt32(iNewProgress)
-        ' StatusText.Text = WebFileDownloader.FormatFileSize(iNewProgress) & " of " & WebFileDownloader.FormatFileSize(IndividualProgressBar.Maximum) & " downloaded"
-        Application.DoEvents()
-    End Sub
-
-    'End Routines to support WebFileDownloader.vb module
-
     Private Sub InstallToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallToolStripMenuItem.Click
 
         Select Case serverNumber
@@ -632,5 +605,35 @@ Public Class Launchpad
                Format(num_cols + 1, "G") & " Elements")
     End Sub
 
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Environment.Exit(0)
+    End Sub
+
+    'Start Routines to support WebFileDownloader.vb module
+
+    'FIRES WHEN WE HAVE GOTTEN THE DOWNLOAD SIZE, SO WE KNOW WHAT BOUNDS TO GIVE THE PROGRESS BAR
+    Private Sub _Downloader_FileDownloadSizeObtained(ByVal iFileSize As Long) Handles _Downloader.FileDownloadSizeObtained
+        IndividualProgressBar.Value = 0
+        IndividualProgressBar.Maximum = Convert.ToInt32(iFileSize)
+    End Sub
+
+    'FIRES WHEN DOWNLOAD IS COMPLETE
+    Private Sub _Downloader_FileDownloadComplete() Handles _Downloader.FileDownloadComplete
+        IndividualProgressBar.Value = IndividualProgressBar.Maximum
+    End Sub
+
+    'FIRES WHEN DOWNLOAD FAILES. PASSES IN EXCEPTION INFO
+    Private Sub _Downloader_FileDownloadFailed(ByVal ex As System.Exception) Handles _Downloader.FileDownloadFailed
+        MessageBox.Show("An error has occured during download: " & ex.Message)
+    End Sub
+
+    'FIRES WHEN MORE OF THE FILE HAS BEEN DOWNLOADED
+    Private Sub _Downloader_AmountDownloadedChanged(ByVal iNewProgress As Long) Handles _Downloader.AmountDownloadedChanged
+        IndividualProgressBar.Value = Convert.ToInt32(iNewProgress)
+        ' StatusText.Text = WebFileDownloader.FormatFileSize(iNewProgress) & " of " & WebFileDownloader.FormatFileSize(IndividualProgressBar.Maximum) & " downloaded"
+        Application.DoEvents()
+    End Sub
+
+    'End Routines to support WebFileDownloader.vb module
 
 End Class

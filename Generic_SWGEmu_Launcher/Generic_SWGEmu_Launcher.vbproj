@@ -114,6 +114,13 @@
     <Compile Include="confirmEULA.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="getInstallPath.Designer.vb">
+      <DependentUpon>getInstallPath.vb</DependentUpon>
+    </Compile>
+    <Compile Include="getInstallPath.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="installUtils.vb" />
     <Compile Include="Launchpad.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +156,9 @@
     <EmbeddedResource Include="confirmEULA.resx">
       <DependentUpon>confirmEULA.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="getInstallPath.resx">
+      <DependentUpon>getInstallPath.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Launchpad.resx">
       <DependentUpon>Launchpad.vb</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +193,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Launcher Background.png" />
     <Content Include="logo_yellow.png" />
     <Content Include="logo_yellow_medium.ico" />
     <Content Include="logo_yellow_small.ico" />

@@ -11,20 +11,6 @@ Public Class textUtils
 
     End Sub 'presentStatus
 
-    Public Sub presentStatus(ByVal text As TextBox, ByVal status As String, ByVal delay As Double)
-        ' Clear the text box
-        clearStatus(text)
-
-        ' Output the string to the text box
-        text.Text = status
-        text.Refresh()
-
-        ' Give the user a chance to see the status
-        If delay < 1 Then delay = 1
-        Thread.Sleep(delay)
-
-    End Sub 'presentStatus
-
     Public Sub extendStatus(ByVal text As TextBox, ByVal status As String, ByVal delay As Double)
         ' Output the string to the text box without clearing current content
         text.Text = text.Text & status
@@ -35,6 +21,15 @@ Public Class textUtils
         Thread.Sleep(delay)
 
     End Sub 'extendStatus
+
+    Public Sub presentStatus(ByVal text As TextBox, ByVal status As String, ByVal delay As Double)
+        ' Clear the text box
+        clearStatus(text)
+
+        ' Output the string to the text box
+        extendStatus(text, status, delay)
+
+    End Sub 'presentStatus
 
     Public Sub presentText(ByVal text As TextBox, ByVal status As String, ByVal delay As Double)
         ' Clear text and output a string with a newline attached
