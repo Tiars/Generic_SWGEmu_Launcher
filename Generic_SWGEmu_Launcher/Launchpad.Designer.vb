@@ -29,19 +29,16 @@ Partial Class Launchpad
         Me.PatchNotesBox = New System.Windows.Forms.RichTextBox()
         Me.StatusTextBox = New System.Windows.Forms.RichTextBox()
         Me.startGameButton = New System.Windows.Forms.Button()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.ForumToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EULAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ProfessionCalculatorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InstallToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShutdownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SwitchToTestserverToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GameConfigurationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.MenuTop = New System.Windows.Forms.MenuStrip()
+        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MenuStrip1.SuspendLayout()
+        Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InstallFromSWGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuTop.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusText
@@ -50,12 +47,12 @@ Partial Class Launchpad
         Me.StatusText.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.StatusText.CausesValidation = False
         Me.StatusText.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.StatusText.Location = New System.Drawing.Point(11, 350)
-        Me.StatusText.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.StatusText.Location = New System.Drawing.Point(7, 227)
+        Me.StatusText.Margin = New System.Windows.Forms.Padding(4)
         Me.StatusText.Multiline = True
         Me.StatusText.Name = "StatusText"
         Me.StatusText.ReadOnly = True
-        Me.StatusText.Size = New System.Drawing.Size(742, 19)
+        Me.StatusText.Size = New System.Drawing.Size(495, 12)
         Me.StatusText.TabIndex = 0
         Me.StatusText.WordWrap = False
         '
@@ -63,30 +60,30 @@ Partial Class Launchpad
         '
         Me.IndividualProgressBar.BackColor = System.Drawing.Color.White
         Me.IndividualProgressBar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.IndividualProgressBar.Location = New System.Drawing.Point(11, 381)
-        Me.IndividualProgressBar.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.IndividualProgressBar.Location = New System.Drawing.Point(7, 248)
+        Me.IndividualProgressBar.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.IndividualProgressBar.Name = "IndividualProgressBar"
-        Me.IndividualProgressBar.Size = New System.Drawing.Size(742, 15)
+        Me.IndividualProgressBar.Size = New System.Drawing.Size(495, 10)
         Me.IndividualProgressBar.TabIndex = 1
         '
         'OverallProgressBar
         '
         Me.OverallProgressBar.BackColor = System.Drawing.Color.White
         Me.OverallProgressBar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.OverallProgressBar.Location = New System.Drawing.Point(11, 415)
-        Me.OverallProgressBar.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.OverallProgressBar.Location = New System.Drawing.Point(7, 270)
+        Me.OverallProgressBar.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.OverallProgressBar.Name = "OverallProgressBar"
-        Me.OverallProgressBar.Size = New System.Drawing.Size(742, 15)
+        Me.OverallProgressBar.Size = New System.Drawing.Size(495, 10)
         Me.OverallProgressBar.TabIndex = 2
         '
         'PatchNotesBox
         '
         Me.PatchNotesBox.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.PatchNotesBox.Location = New System.Drawing.Point(11, 100)
-        Me.PatchNotesBox.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.PatchNotesBox.Location = New System.Drawing.Point(7, 65)
+        Me.PatchNotesBox.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.PatchNotesBox.Name = "PatchNotesBox"
         Me.PatchNotesBox.ReadOnly = True
-        Me.PatchNotesBox.Size = New System.Drawing.Size(742, 231)
+        Me.PatchNotesBox.Size = New System.Drawing.Size(495, 150)
         Me.PatchNotesBox.TabIndex = 7
         Me.PatchNotesBox.Text = ""
         '
@@ -95,12 +92,12 @@ Partial Class Launchpad
         Me.StatusTextBox.BackColor = System.Drawing.Color.Black
         Me.StatusTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.StatusTextBox.ForeColor = System.Drawing.Color.Yellow
-        Me.StatusTextBox.Location = New System.Drawing.Point(804, 100)
-        Me.StatusTextBox.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.StatusTextBox.Location = New System.Drawing.Point(536, 65)
+        Me.StatusTextBox.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.StatusTextBox.Name = "StatusTextBox"
         Me.StatusTextBox.ReadOnly = True
         Me.StatusTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None
-        Me.StatusTextBox.Size = New System.Drawing.Size(225, 156)
+        Me.StatusTextBox.Size = New System.Drawing.Size(150, 101)
         Me.StatusTextBox.TabIndex = 8
         Me.StatusTextBox.Text = ""
         '
@@ -112,100 +109,13 @@ Partial Class Launchpad
         Me.startGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.startGameButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.startGameButton.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.startGameButton.Location = New System.Drawing.Point(894, 381)
-        Me.startGameButton.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.startGameButton.Location = New System.Drawing.Point(596, 248)
+        Me.startGameButton.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.startGameButton.Name = "startGameButton"
-        Me.startGameButton.Size = New System.Drawing.Size(112, 50)
+        Me.startGameButton.Size = New System.Drawing.Size(75, 32)
         Me.startGameButton.TabIndex = 9
         Me.startGameButton.Text = "Launch Game"
         Me.startGameButton.UseVisualStyleBackColor = False
-        '
-        'MenuStrip1
-        '
-        Me.MenuStrip1.BackColor = System.Drawing.Color.Transparent
-        Me.MenuStrip1.Dock = System.Windows.Forms.DockStyle.None
-        Me.MenuStrip1.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem, Me.InstallToolStripMenuItem, Me.SwitchToTestserverToolStripMenuItem, Me.ShutdownToolStripMenuItem, Me.GameConfigurationToolStripMenuItem, Me.ProfessionCalculatorToolStripMenuItem, Me.EULAToolStripMenuItem, Me.ForumToolStripMenuItem})
-        Me.MenuStrip1.Location = New System.Drawing.Point(60, 10)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(0)
-        Me.MenuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.MenuStrip1.Size = New System.Drawing.Size(824, 24)
-        Me.MenuStrip1.TabIndex = 10
-        Me.MenuStrip1.Text = "MenuStrip1"
-        '
-        'ForumToolStripMenuItem
-        '
-        Me.ForumToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ForumToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.ForumToolStripMenuItem.Name = "ForumToolStripMenuItem"
-        Me.ForumToolStripMenuItem.Size = New System.Drawing.Size(77, 24)
-        Me.ForumToolStripMenuItem.Text = "Forums"
-        '
-        'EULAToolStripMenuItem
-        '
-        Me.EULAToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.EULAToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.EULAToolStripMenuItem.Name = "EULAToolStripMenuItem"
-        Me.EULAToolStripMenuItem.Size = New System.Drawing.Size(58, 24)
-        Me.EULAToolStripMenuItem.Text = "EULA"
-        '
-        'ProfessionCalculatorToolStripMenuItem
-        '
-        Me.ProfessionCalculatorToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ProfessionCalculatorToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.ProfessionCalculatorToolStripMenuItem.Name = "ProfessionCalculatorToolStripMenuItem"
-        Me.ProfessionCalculatorToolStripMenuItem.Size = New System.Drawing.Size(176, 24)
-        Me.ProfessionCalculatorToolStripMenuItem.Text = "Profession Calculator"
-        '
-        'InstallToolStripMenuItem
-        '
-        Me.InstallToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.InstallToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.InstallToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.InstallToolStripMenuItem.Name = "InstallToolStripMenuItem"
-        Me.InstallToolStripMenuItem.Size = New System.Drawing.Size(63, 24)
-        Me.InstallToolStripMenuItem.Text = "Install"
-        '
-        'ShutdownToolStripMenuItem
-        '
-        Me.ShutdownToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ShutdownToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
-        Me.ShutdownToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ShutdownToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShutdownLauncherAfterStartingGameToolStripMenuItem, Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem})
-        Me.ShutdownToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.ShutdownToolStripMenuItem.Name = "ShutdownToolStripMenuItem"
-        Me.ShutdownToolStripMenuItem.Size = New System.Drawing.Size(135, 24)
-        Me.ShutdownToolStripMenuItem.Text = "Launcher Setup"
-        '
-        'ShutdownLauncherAfterStartingGameToolStripMenuItem
-        '
-        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Name = "ShutdownLauncherAfterStartingGameToolStripMenuItem"
-        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
-        Me.ShutdownLauncherAfterStartingGameToolStripMenuItem.Text = "Shutdown Launcher  after starting game"
-        '
-        'KeepLauncherRunningAfterStartingGameToolStripMenuItem
-        '
-        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Name = "KeepLauncherRunningAfterStartingGameToolStripMenuItem"
-        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Size = New System.Drawing.Size(397, 26)
-        Me.KeepLauncherRunningAfterStartingGameToolStripMenuItem.Text = "Keep Launcher running after starting game"
-        '
-        'SwitchToTestserverToolStripMenuItem
-        '
-        Me.SwitchToTestserverToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.SwitchToTestserverToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.SwitchToTestserverToolStripMenuItem.Name = "SwitchToTestserverToolStripMenuItem"
-        Me.SwitchToTestserverToolStripMenuItem.Size = New System.Drawing.Size(97, 24)
-        Me.SwitchToTestserverToolStripMenuItem.Text = "Testserver"
-        '
-        'GameConfigurationToolStripMenuItem
-        '
-        Me.GameConfigurationToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.GameConfigurationToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
-        Me.GameConfigurationToolStripMenuItem.Name = "GameConfigurationToolStripMenuItem"
-        Me.GameConfigurationToolStripMenuItem.Size = New System.Drawing.Size(169, 24)
-        Me.GameConfigurationToolStripMenuItem.Text = "Game Configuration"
         '
         'Button1
         '
@@ -215,33 +125,91 @@ Partial Class Launchpad
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.Button1.Location = New System.Drawing.Point(775, 381)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button1.Location = New System.Drawing.Point(517, 248)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(112, 50)
+        Me.Button1.Size = New System.Drawing.Size(75, 32)
         Me.Button1.TabIndex = 11
         Me.Button1.Text = "Test Download"
         Me.Button1.UseVisualStyleBackColor = False
         '
+        'MenuTop
+        '
+        Me.MenuTop.BackColor = System.Drawing.Color.Transparent
+        Me.MenuTop.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.MenuTop.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.MenuTop.Location = New System.Drawing.Point(4, 4)
+        Me.MenuTop.Name = "MenuTop"
+        Me.MenuTop.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
+        Me.MenuTop.Size = New System.Drawing.Size(805, 24)
+        Me.MenuTop.TabIndex = 12
+        Me.MenuTop.Text = "MenuStrip1"
+        '
+        'FileToolStripMenuItem
+        '
+        Me.FileToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+        Me.FileToolStripMenuItem.Text = "File"
+        '
         'ExitToolStripMenuItem
         '
-        Me.ExitToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.ExitToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ExitToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
         Me.ExitToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(47, 24)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
+        '
+        'SettingsToolStripMenuItem
+        '
+        Me.SettingsToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
+        Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem, Me.InstallFromSWGToolStripMenuItem})
+        Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
+        Me.SettingsToolStripMenuItem.Text = "Settings"
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
+        Me.OptionsToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.OptionsToolStripMenuItem.Text = "Options"
+        '
+        'InstallFromSWGToolStripMenuItem
+        '
+        Me.InstallFromSWGToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
+        Me.InstallFromSWGToolStripMenuItem.ForeColor = System.Drawing.Color.Yellow
+        Me.InstallFromSWGToolStripMenuItem.Name = "InstallFromSWGToolStripMenuItem"
+        Me.InstallFromSWGToolStripMenuItem.Size = New System.Drawing.Size(162, 22)
+        Me.InstallFromSWGToolStripMenuItem.Text = "Install from SWG"
+        '
+        'HelpToolStripMenuItem
+        '
+        Me.HelpToolStripMenuItem.BackColor = System.Drawing.Color.Transparent
+        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
+        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+        Me.HelpToolStripMenuItem.Text = "Help"
+        '
+        'AboutToolStripMenuItem
+        '
+        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AboutToolStripMenuItem.Text = "About"
         '
         'Launchpad
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.ClientSize = New System.Drawing.Size(1043, 441)
+        Me.ClientSize = New System.Drawing.Size(813, 287)
+        Me.Controls.Add(Me.MenuTop)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.startGameButton)
         Me.Controls.Add(Me.StatusTextBox)
@@ -249,21 +217,19 @@ Partial Class Launchpad
         Me.Controls.Add(Me.OverallProgressBar)
         Me.Controls.Add(Me.IndividualProgressBar)
         Me.Controls.Add(Me.StatusText)
-        Me.Controls.Add(Me.MenuStrip1)
         Me.ForeColor = System.Drawing.Color.Yellow
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MainMenuStrip = Me.MenuStrip1
-        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Launchpad"
-        Me.Padding = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.Padding = New System.Windows.Forms.Padding(4)
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Text = """SWGEmu Launcher Version {0}.{1:00}.{2:000}.{3:0000}"""
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
+        Me.MenuTop.ResumeLayout(False)
+        Me.MenuTop.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -275,16 +241,13 @@ Partial Class Launchpad
     Friend WithEvents PatchNotesBox As RichTextBox
     Friend WithEvents StatusTextBox As RichTextBox
     Friend WithEvents startGameButton As Button
-    Friend WithEvents MenuStrip1 As MenuStrip
-    Friend WithEvents ForumToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents EULAToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ProfessionCalculatorToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SwitchToTestserverToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents GameConfigurationToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents InstallToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Button1 As Button
-    Friend WithEvents ShutdownToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ShutdownLauncherAfterStartingGameToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents KeepLauncherRunningAfterStartingGameToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MenuTop As MenuStrip
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SettingsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents InstallFromSWGToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
 End Class

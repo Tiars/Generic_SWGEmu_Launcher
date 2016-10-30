@@ -190,39 +190,63 @@ Public Class Launchpad
     End Function 'verifyLegal
 
     Private Sub getGamenotesText()
-        Dim request As WebRequest = WebRequest.Create(cUtils.getGamePatchNotes())
-        Using response As WebResponse = request.GetResponse()
-            Using reader As New StreamReader(response.GetResponseStream())
-                PatchNotesBox.Rtf = reader.ReadToEnd()
+        Dim regString = cUtils.getGamePatchNotes()
+        Dim request As WebRequest
+
+        If (regString IsNot Nothing) Then
+            request = WebRequest.Create(regString)
+            Using response As WebResponse = request.GetResponse()
+                Using reader As New StreamReader(response.GetResponseStream())
+                    PatchNotesBox.Rtf = reader.ReadToEnd()
+                End Using
             End Using
-        End Using
+        End If
+
     End Sub 'getGamenotesText
 
     Private Sub getGameStatusText()
-        Dim request As WebRequest = WebRequest.Create(cUtils.getGameStatus())
-        Using response As WebResponse = request.GetResponse()
-            Using reader As New StreamReader(response.GetResponseStream())
-                StatusTextBox.Rtf = reader.ReadToEnd()
+        Dim regString = cUtils.getGameStatus()
+        Dim request As WebRequest
+
+        If (regString IsNot Nothing) Then
+            request = WebRequest.Create(regString)
+            Using response As WebResponse = request.GetResponse()
+                Using reader As New StreamReader(response.GetResponseStream())
+                    StatusTextBox.Rtf = reader.ReadToEnd()
+                End Using
             End Using
-        End Using
+        End If
+
     End Sub 'getGameStatusText
 
     Private Sub getTestnotesText()
-        Dim request As WebRequest = WebRequest.Create(cUtils.getTestPatchNotes())
-        Using response As WebResponse = request.GetResponse()
-            Using reader As New StreamReader(response.GetResponseStream())
-                PatchNotesBox.Rtf = reader.ReadToEnd()
+        Dim regString = cUtils.getTestPatchNotes()
+        Dim request As WebRequest
+
+        If (regString IsNot Nothing) Then
+            request = WebRequest.Create(regString)
+            Using response As WebResponse = request.GetResponse()
+                Using reader As New StreamReader(response.GetResponseStream())
+                    PatchNotesBox.Rtf = reader.ReadToEnd()
+                End Using
             End Using
-        End Using
+        End If
+
     End Sub 'getTestnotesText
 
     Private Sub getTestStatusText()
-        Dim request As WebRequest = WebRequest.Create(cUtils.getTestStatus())
-        Using response As WebResponse = request.GetResponse()
-            Using reader As New StreamReader(response.GetResponseStream())
-                StatusTextBox.Rtf = reader.ReadToEnd()
+        Dim regString = cUtils.getTestStatus()
+        Dim request As WebRequest
+
+        If (regString IsNot Nothing) Then
+            request = WebRequest.Create(regString)
+            Using response As WebResponse = request.GetResponse()
+                Using reader As New StreamReader(response.GetResponseStream())
+                    StatusTextBox.Rtf = reader.ReadToEnd()
+                End Using
             End Using
-        End Using
+        End If
+
     End Sub 'getTestStatusText
 
     Private Sub setGameTestInfo(ByRef flag As Integer)
@@ -231,11 +255,11 @@ Public Class Launchpad
         If flag = 0 Then
             getGamenotesText()
             getGameStatusText()
-            SwitchToTestserverToolStripMenuItem.Text = "Switch to Test Server"
+            '            SwitchToTestserverToolStripMenuItem.Text = "Switch to Test Server"
         Else
             getTestnotesText()
             getTestStatusText()
-            SwitchToTestserverToolStripMenuItem.Text = "Switch to Main Server"
+            '            SwitchToTestserverToolStripMenuItem.Text = "Switch to Main Server"
         End If
 
     End Sub
@@ -249,21 +273,25 @@ Public Class Launchpad
 
         ' The name of the file that holds the version information on the server
         ' Could be paramatarized but there is little reason to change it
-        Dim request As WebRequest = WebRequest.Create(vURL & "Version")
-        Using response As WebResponse = request.GetResponse()
-            Using reader As New StreamReader(response.GetResponseStream())
-                serverVersion = reader.ReadToEnd()
-                If lVersion >= serverVersion Then Return True
+        Dim request As WebRequest
+
+        If (vURL IsNot Nothing) Then
+            request = WebRequest.Create(vURL & "Version")
+            Using response As WebResponse = request.GetResponse()
+                Using reader As New StreamReader(response.GetResponseStream())
+                    serverVersion = reader.ReadToEnd()
+                    If lVersion >= serverVersion Then Return True
+                End Using
             End Using
-        End Using
+        End If
 
         Return False ' False buy default
-    End Function 'getServerGameVersion
+    End Function 'getVersionUpToDate
 
     Private Sub SWGEmu_Launcher_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ' For test purposes set the working directory
-        Directory.SetCurrentDirectory("D:\Users\Public\Games\SWG Tiars Launcher")
+        Directory.SetCurrentDirectory("H:\Users\Public\Games\SWG Tiars Launcher")
 
         setGameTestInfo(serverNumber) ' At start serverNumber is always 0 for Main Server
 
@@ -280,19 +308,19 @@ Public Class Launchpad
         ' Hide unused toolbar items
         If Not cUtils.getLauncherHasForum() Then
             ' Item not configured so hide
-            ForumToolStripMenuItem.Visible = False
+            '            ForumToolStripMenuItem.Visible = False
         End If
         If Not cUtils.getLauncherHasEULA() Then
             ' Item not configured so hide
-            EULAToolStripMenuItem.Visible = False
+            '            EULAToolStripMenuItem.Visible = False
         End If
         If Not cUtils.getLauncherHasCalc() Then
             ' Item not configured so hide
-            ProfessionCalculatorToolStripMenuItem.Visible = False
+            '            ProfessionCalculatorToolStripMenuItem.Visible = False
         End If
         If Not cUtils.getLauncherHasTest() Then
             ' Item not configured so hide
-            SwitchToTestserverToolStripMenuItem.Visible = False
+            '            SwitchToTestserverToolStripMenuItem.Visible = False
         End If
 
         Dim localVersion As String = Nothing
@@ -306,10 +334,10 @@ Public Class Launchpad
         'See if the game has been installed 
         If File.Exists(cUtils.getGamePath() & GameClient) Then
             gameInstalled = True
-            InstallToolStripMenuItem.Text = "Verify"
+            '            InstallToolStripMenuItem.Text = "Verify"
         Else
             gameInstalled = False
-            InstallToolStripMenuItem.Text = "Install"
+            '            InstallToolStripMenuItem.Text = "Install"
         End If
 
         ' Only ask for Test Server information if the server has a test server
@@ -373,7 +401,7 @@ Public Class Launchpad
 
     End Sub
 
-    Private Sub SwitchToTestserverToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SwitchToTestserverToolStripMenuItem.Click
+    Private Sub SwitchToTestserverToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
         ' Switch between live and Test Server
 
@@ -400,7 +428,7 @@ Public Class Launchpad
 
     End Sub ' SwitchToTestserverToolStripMenuItem_Click
 
-    Private Sub ProfessionCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProfessionCalculatorToolStripMenuItem.Click
+    Private Sub ProfessionCalculatorToolStripMenuItem_Click(sender As Object, e As EventArgs)
         'Launch Kodian's Profession Calculator
 
         If Not cUtils.getLauncherHasCalc() Then
@@ -427,7 +455,7 @@ Public Class Launchpad
 
     End Sub ' ProfessionCalculatorToolStripMenuItem_Click
 
-    Private Sub EULAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EULAToolStripMenuItem.Click
+    Private Sub EULAToolStripMenuItem_Click(sender As Object, e As EventArgs)
         'Open the EULA and confirm reading
         EulaForm = New confirmEULA()
 
@@ -436,7 +464,7 @@ Public Class Launchpad
 
     End Sub ' EULAToolStripMenuItem_Click
 
-    Private Sub ForumToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ForumToolStripMenuItem.Click
+    Private Sub ForumToolStripMenuItem_Click(sender As Object, e As EventArgs)
         'Launch Browser to the Forums
 
         If Not cUtils.getLauncherHasForum() Then
@@ -488,7 +516,7 @@ Public Class Launchpad
 
     End Sub ' startGameButton_Click
 
-    Private Sub GameConfigurationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GameConfigurationToolStripMenuItem.Click
+    Private Sub GameConfigurationToolStripMenuItem_Click(sender As Object, e As EventArgs)
         ' Allocate data storage for the file to execute
         ' This will be set based on the value of serverNumber
 
@@ -562,7 +590,7 @@ Public Class Launchpad
         OverallProgressBar.Value = OverallProgressBar.Maximum
     End Sub
 
-    Private Sub InstallToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InstallToolStripMenuItem.Click
+    Private Sub InstallToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
         Select Case serverNumber
             Case 0
@@ -605,7 +633,7 @@ Public Class Launchpad
                Format(num_cols + 1, "G") & " Elements")
     End Sub
 
-    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Environment.Exit(0)
     End Sub
 
